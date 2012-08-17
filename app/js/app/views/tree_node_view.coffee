@@ -1,4 +1,4 @@
-class App.Views.TreeView extends Backbone.View
+class App.Views.TreeNodeView extends Backbone.View
 	initialize: ->
 		_.bindAll @
 

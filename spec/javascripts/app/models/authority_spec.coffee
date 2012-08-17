@@ -26,55 +26,7 @@ describe 'App.Models.Authority', ->
 		expect(parent.children().length).toEqual(2)
 
 	it 'should generate tree from JSON', -> 
-		json = {
-			name: "foo",
-			children: [
-			 	{
-			 	 name: "bar",
-			 	 children: [
-			 	 	{name: "baz"},
-			 	 	{name: "bad"},
-			 	 	{name: "bag"}
-			 	 ]
-			 	},
-			 	{
-			 	name: "World",
-			 	children: [
-			 		{
-			 			name: "North America",
-						children: [
-							{
-								name: "Canada",
-								children: [
-									{
-										name: "Quebec",
-										children: [
-											{name:"Montreal"},
-											{name:"Quebec City"},
-											{name:"Hull"}
-										]
-									},
-									{
-										name: "Ontario",
-										children: [
-											{name:"Toronto"}
-											{name:"Ottawa"}
-										]
-									}
-								]
-							}
-						]
-			 		}
-			 		{name: "South America"},
-					{name: "Middle East"},
-					{name: "Europe"},
-					{name: "Asia"},
-					{name: "Oceania"},
-					{name: "Africa"}
-			 	]
-			 	}
-			 ]
-			}
+		json = Fixtures.locale_tree 
 		auth = App.Models.Authority.from_json(json)
 		expect(auth.children().last().children().first().children().first().get('name')).toEqual('Canada')
 

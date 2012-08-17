@@ -19,7 +19,6 @@ src_files:
   - app/js/app/**/*.js
   - app/js/app/**/*.coffee
 
-
 # stylesheets
 #
 # Return an array of stylesheet filepaths relative to src_dir to include before jasmine specs.
