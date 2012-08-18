@@ -31,7 +31,7 @@ src_files:
 #   - stylesheets/*.css
 #
 stylesheets:
-
+  - app/css/quarry/*.css
 # helpers
 #
 # Return an array of filepaths relative to spec_dir to include before jasmine specs.
