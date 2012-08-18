@@ -46,6 +46,7 @@ helpers:
   - helpers/**/*.coffee
   - helpers/**/*.js
   - fixtures/**/*.coffee
+  - fixtures/**/**/*.ejs
 
 
 # spec_files
@@ -82,4 +83,3 @@ src_dir:
 # spec_dir: spec/javascripts
 #
 spec_dir:
-

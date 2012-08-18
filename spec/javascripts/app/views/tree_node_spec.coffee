@@ -1,11 +1,10 @@
 describe 'App.Views.TreeNodeView', ->
 	beforeEach -> 
-		$("#testbed").remove()
-		$("body").append '<div id="testbed">testbed</div>'
+		reload_fx()
 
 	it 'should render a tree', ->
 		tree = App.Models.Authority.from_json Fixtures.locale_tree 
-		console.log tree
-		view = new App.Views.TreeNodeView({el: "#testbed",model: tree})
-		view.render()
-		#expect($(tv.render()).find("ul").length).toEqual(10)
+		view = new App.Views.TreeNodeView({model: tree, depth: 1})
+		$("#testbed").html("<ul></ul>")
+		$("#testbed ul").html(view.render().el)
+		expect($("#testbed ul").length).toEqual(8)
