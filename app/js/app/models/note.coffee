@@ -18,27 +18,13 @@ class App.Models.Note extends Backbone.Model
 
 		self = @
 
-		console.log(self.get('start_paragraph'),other.get('start_paragraph'))
-
 		if (self.get('start_paragraph') < other.get('start_paragraph'))
 			[other,self] = [self, other]
 
-		console.log(self.get('start_paragraph'),other.get('start_paragraph'))
-
-		p1 = {x:self.get("start_paragraph"),y:self.get("start_paragraph_char")}
-		p2 = {x:self.get("end_paragraph"),y:self.get("end_paragraph_char")}
-		p3 = {x:other.get("start_paragraph"),y:other.get("start_paragraph_char")}
-		p4 = {x:other.get("end_paragraph"),y:other.get("end_paragraph_char")}
-
-
-		console.log(p1,p2,p3,p4)
-
-		console.log('((p1.x > p3.x && p2.x > p3.x))=',(p1.x > p3.x && p2.x > p3.x && p1.x < p4.x) )
-
-		if (p1.x == p3.x)
-			(p1.y > p3.y && p2.y > p4.y) || (p1.y > p3.y && p2.y > p3.y) || (p1.y < p3.y && p2.y > p4.x)
+		if (self.get('start_paragraph') == other.get('start_paragraph'))
+			!(other.get("end_paragraph_char") < self.get("start_paragraph_char") || other.get("start_paragraph_char") > self.get("end_paragraph_char"))
 		else
-			(p1.x > p3.x && p2.x > p4.x && p1.x < p4.x) || (p1.x > p3.x && p2.x > p3.x && p1.x < p4.x) || (p1.x < p3.x && p2.x > p4.x && p1.x < p4.x)
+			!(other.get("end_paragraph") < self.get("start_paragraph") || other.get("start_paragraph") > self.get("end_paragraph"))
 
 	normalize: ->
 
