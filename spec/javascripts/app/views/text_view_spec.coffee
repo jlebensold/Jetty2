@@ -1,5 +1,5 @@
 describe 'App.Views.TextView', ->
-	beforeEach -> 
+	beforeEach ->
 		reload_fx()
 
 	it 'should render render text', ->
@@ -45,3 +45,28 @@ describe 'App.Views.TextView', ->
 		view.addHighlight note
 
 		expect($(view.el).find(".notes_container .note").length).toEqual(1)
+
+	it "should keep track of added notes", ->
+		txt = new App.Models.Content({text: Fixtures.text_text})
+		view = new App.Views.TextView({model: txt})
+		$("testbed").html(view.render().el)
+
+		note = new App.Models.Note({
+			start_paragraph:5
+			end_paragraph:7
+			start_paragraph_char: 4
+			end_paragraph_char: 22
+			})
+		view.addHighlight note
+
+		note2 = new App.Models.Note({
+			start_paragraph:4
+			end_paragraph:4
+			start_paragraph_char: 10
+			end_paragraph_char: 21
+			})
+
+		view.addHighlight note2
+
+		expect(view.notes.length).toEqual(2)
+
