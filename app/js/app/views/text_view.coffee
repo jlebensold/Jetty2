@@ -14,20 +14,21 @@ class App.Views.TextView extends Backbone.View
 
 	addHighlight: (note) ->
 		return unless @notes.addUnique(note)
+
 		if (note.get('start_paragraph') == note.get('end_paragraph'))
 			@addSingleParagraphHighlight note
 		else
 			@addMultiParagraphHighlight note
 
-
 		note_view = new App.Views.NoteView({model: note})
-		console.log(note_view.render().el)
 		$(@el).find(".notes_container").append(note_view.render().el)
 
 
 	addMultiParagraphHighlight: (note) ->
 		for i in [note.get('start_paragraph')..note.get('end_paragraph')]
-			h = $(@el).find(".h_#{i}")
+			h = $("<div class=\"h_#{i}\">#{$(@el).find(".p_#{i}").text()}</div>")
+			$(@el).find("div[data-set-id=#{i}]").prepend(h)
+
 			if (i == note.get('start_paragraph'))
 				highlighted_part = h.text().substr(note.get('start_paragraph_char'))
 				normal_part = h.text().substr(0,note.get('start_paragraph_char'))
@@ -40,7 +41,9 @@ class App.Views.TextView extends Backbone.View
 				h.html("<em>#{h.text()}</em>")
 
 	addSingleParagraphHighlight: (note) ->
-		h = $(@el).find(".h_#{note.get('start_paragraph')}")
+		p = note.get('start_paragraph')
+		h = $("<div class=\"h_#{p}\">#{$(@el).find(".p_#{p}").text()}</div>")
+		$(@el).find("div[data-set-id=#{p}]").prepend(h)
 		highlighted_part = h.text().substr(note.get('start_paragraph_char'),note.get('end_paragraph_char'))
 		first_normal_part = h.text().substr(0,note.get('start_paragraph_char'))
 		second_normal_part = h.text().substr(note.get('end_paragraph_char'))
@@ -52,7 +55,6 @@ class App.Views.TextView extends Backbone.View
 		i = 0
 		_.each @model.asParagraphs(), ((p) ->
 			o += "<div class=\"set\" data-set-id=\"#{i}\">
-					<div class=\"h_#{i}\">#{p}</div>
 					<p class=\"p_#{i}\">#{p}</p>
 				  </div>"
 
