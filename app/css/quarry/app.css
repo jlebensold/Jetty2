@@ -1,6 +1,13 @@
 body {
 
 }
+.authority_manager {
+	background: #FFF;
+}
+	.authority_manager .tree {
+		height: 300px;
+		overflow: scroll;
+	}
 .content_container {
 	float: left;
 }
