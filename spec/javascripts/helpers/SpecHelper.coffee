@@ -7,6 +7,7 @@ beforeEach ->
 	$("body").append '<div id="testbed">testbed</div>'
 
 	loadFixtures("templates/tree_node.ejs");
+	loadFixtures("templates/authority_manager.ejs");
 	loadFixtures("templates/content.ejs");
 	loadFixtures("templates/note.ejs");
 

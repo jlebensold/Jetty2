@@ -2,7 +2,7 @@ describe 'App.Models.Note', ->
   beforeEach ->
     c = new App.Models.Note({text: "interesting!"})
 
-  describe 'should be able to determin if one note overlaps another', ->
+  describe 'should be able to determine if one note overlaps another', ->
     it 'note is is fully contained', ->
       note = new App.Models.Note({
         start_paragraph:5
