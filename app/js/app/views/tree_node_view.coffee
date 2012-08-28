@@ -15,5 +15,5 @@ class App.Views.TreeNodeView extends Backbone.View
 			$(children_html).append(tnv.render().el)
 		), this
 		if $(children_html).find("li").length > 0
-			$(@el).append(children_html) 
+			$(@el).append(children_html)
 		return @
