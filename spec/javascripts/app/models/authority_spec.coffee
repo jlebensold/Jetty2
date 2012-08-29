@@ -62,5 +62,4 @@ describe 'App.Models.Authority', ->
 		auth.children().last().attach canada
 
 		expect(auth.children().last().children().length).toEqual(8)
-		
-
+		'

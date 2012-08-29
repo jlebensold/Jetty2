@@ -6,6 +6,7 @@ describe 'App.Views.AuthorityManagerView', ->
 	it 'should update the authority when a drag-drop is completed', ->
 		am = new App.Views.AuthorityManagerView({model: App.Models.Authority.from_json(Fixtures.locale_tree)})
 		$("#testbed").html(am.render().el)
+		#TODO: come up with a test for this
 		
 		
 

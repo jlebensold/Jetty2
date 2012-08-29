@@ -10,18 +10,17 @@ class App.Views.AuthorityManagerView extends Backbone.View
 	render: ->
 		$(@el).html @template()
 		$(@el).find(".tree").html(@treeview.render().el)
-		list = @model.flattened()
+		tree = @model
 		$($(@el).find(".tree")).sortable({
 			items: "li", 
 			toleranceElement: '> div'
 			update: (e,ui) -> 
 				node_id = $(ui.item).find("div").data('node-id')
-				#console.log @treeview.model
-				m = new App.Models.Authority(list.where({id:node_id})[0].toJSON())
-				#console.log list.where({id:node_id})[0].toJSON()
-				m.set_parent(list.first)
-				console.log list
-
+				node = tree.search node_id
+				tree.remove node
+				target_node_id = $(ui.item).parent().parent().find('div').first().data('node-id')
+				target = tree.search target_node_id
+				target.attach node
 		})
 
 		@
