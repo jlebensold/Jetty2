@@ -35,18 +35,31 @@ class App.Models.Authority extends Backbone.Model
 
 	remove: (node) ->
 		n = node.root_node()
-		n.search(node).detach()
+		n.search(node.id).detach()
 
-	search: (node) ->
+	search: (node_id) ->
 		pointer = @
-		#TODO
-	detach: ->
-		#TODO
+		found = null
+		found = pointer if pointer.id == node_id
+		pointer.children().each( (child) ->
+			child_found = child.search(node_id)
+			if (child_found != null)
+				found = child_found
+		)
+		found
 
+	attach: (node) ->
+		node.set_parent @		
+
+	detach: ->
+		self = @
+		p = @.parent()
+		p.set('children',new App.Collections.AuthorityList(p.children().reject((a) -> a.id == self.id)))
+		@.set('parent',null)
+		@
 
 	flattened: ->
 		list = new App.Collections.AuthorityList()
-		
 		@add_to_list list, @children()
 
 	add_to_list: (list,children) ->
