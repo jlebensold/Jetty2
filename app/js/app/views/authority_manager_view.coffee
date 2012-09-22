@@ -25,6 +25,7 @@ class App.Views.AuthorityManagerView extends Backbone.View
 	render: ->
 		$(@el).html @template()
 		$(@el).find(".tree").html(@treeview.render().el)
+		
 		self = @
 		$($(@el).find(".tree")).sortable({
 			items: "li", 
@@ -32,7 +33,6 @@ class App.Views.AuthorityManagerView extends Backbone.View
 			update: (e,ui) -> 
 				node_id = $(ui.item).find("div").data('node-id')
 				node = self.model.search node_id
-				console.log node
 				self.model.remove node
 				target_node_id = $(ui.item).parent().parent().find('div').first().data('node-id')
 				target = self.model.search target_node_id

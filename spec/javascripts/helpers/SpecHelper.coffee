@@ -10,6 +10,7 @@ beforeEach ->
 	loadFixtures("templates/authority_manager.ejs");
 	loadFixtures("templates/content.ejs");
 	loadFixtures("templates/note.ejs");
+	loadFixtures("templates/reader.ejs");
 
 	reload_fx()
 	$("body .tpl").remove()
