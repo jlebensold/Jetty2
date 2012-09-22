@@ -63,6 +63,10 @@ class App.Models.Authority extends Backbone.Model
 		list = new App.Collections.AuthorityList()
 		@add_to_list list, @children()
 
+	all_authorities: ->
+		@flattened().models.map((a) -> 
+			{label:a.get('name'),value:a.get('id')}
+		)
 	add_to_list: (list,children) ->
 		list.add children.toJSON()
 		node = @
