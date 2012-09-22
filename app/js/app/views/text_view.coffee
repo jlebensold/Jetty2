@@ -4,6 +4,7 @@ class App.Views.TextView extends Backbone.View
 
 	initialize: ->
 		@template = _.template($('#content').html())
+		@authorities = @options.authorities
 		_.bindAll @, 'render', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight'
 		@notes = new App.Collections.NoteList()
 
@@ -20,7 +21,7 @@ class App.Views.TextView extends Backbone.View
 		else
 			@addMultiParagraphHighlight note
 
-		note_view = new App.Views.NoteView({model: note})
+		note_view = new App.Views.NoteView({model: note, authorities: @authorities})
 		$(@el).find(".notes_container").append(note_view.render().el)
 
 
