@@ -1,14 +1,22 @@
 class App.Views.AuthorityManagerView extends Backbone.View
 	className: "authority_manager span4"
 	events: ->
-
+		{
+			'click .btn_add_node' : 'add_node'
+		}
 	initialize: ->
-		_.bindAll @, 'render', 'render_tree'
+		_.bindAll @, 'render', 'render_tree', 'add_node'
 		@template = _.template($('#authority_manager').html())
 		@treeview = new App.Views.TreeNodeView({model: @model})
 		@model.bind('treechange',@render_tree)
-		
+
 		@
+
+	add_node: (e) -> 
+		e.preventDefault()
+		new_node = App.Models.Authority.from_json({name:$(@el).find('.add_node').val(),children:[]});
+		@model.attach new_node
+		@render()
 
 	render_tree: ->
 		@treeview = new App.Views.TreeNodeView({model: @model})

@@ -15,6 +15,14 @@ describe 'App.Views.AuthorityManagerView', ->
 		treetarget.attach node
 		expect($($($("#testbed em:contains('Montreal')").parents('li')[1]).find('em')[0]).text()).toBe('Ontario')
 		
+
+	it 'should allow adding of tree nodes', -> 
+		am = new App.Views.AuthorityManagerView({model: App.Models.Authority.from_json({name: "root", children: []})})
+		$("#testbed").html(am.render().el)
+		$("#testbed .add_node").val("Test")
+		$("#testbed .btn_add_node").click()
+
+		expect(am.model.children().length).toBe 1
 		
 
 		
