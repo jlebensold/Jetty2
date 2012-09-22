@@ -50,6 +50,7 @@ class App.Models.Authority extends Backbone.Model
 
 	attach: (node) ->
 		node.set_parent @		
+		@.root_node().trigger('treechange')
 
 	detach: ->
 		self = @
