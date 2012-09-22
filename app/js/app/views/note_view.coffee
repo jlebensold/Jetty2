@@ -3,6 +3,7 @@ class App.Views.NoteView extends Backbone.View
 	events: ->
 
 	initialize: ->
+		@authorities = @options.authorities
 		@template = _.template($('#note').html())
 		_.bindAll @, 'render'
 

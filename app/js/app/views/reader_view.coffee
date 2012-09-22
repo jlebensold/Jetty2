@@ -9,12 +9,12 @@ class App.Views.ReaderView extends Backbone.View
 
     @
   render: ->
-    console.log ('aaa')
+    
     $(@el).html @template()
     $(@el).find(".content").html(@txtview.render().el)
     $(@el).find(".manager").html(@am.render().el)
     @
-    
+
   load_content_and_authority: (txt,json) -> 
     @txtview = new App.Views.TextView({model: new App.Models.Content({text: txt})})
     @am = new App.Views.AuthorityManagerView({model: App.Models.Authority.from_json(json)})
