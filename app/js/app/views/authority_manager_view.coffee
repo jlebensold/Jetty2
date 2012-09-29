@@ -25,7 +25,7 @@ class App.Views.AuthorityManagerView extends Backbone.View
 	render: ->
 		$(@el).html @template()
 		$(@el).find(".tree").html(@treeview.render().el)
-		
+		$(@el).draggable();
 		self = @
 		$($(@el).find(".tree")).sortable({
 			items: "li", 
