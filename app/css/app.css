@@ -8,6 +8,7 @@ body {
 	background: #FFF;
 	z-index: 20;
 	border-radius: 5px;
+	border: 1px solid #777;
 	box-shadow: 0px 1px 1px #666;
 }
 	.authority_manager .tree {
@@ -64,5 +65,7 @@ body {
 }
 	.notes_container .note {
 		position: absolute;
-		background: yellow;
+		background: #FFFEE3;
+		border-radius: 5px;
+		padding: 5px;
 	}

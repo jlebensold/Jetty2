@@ -29,14 +29,13 @@ module Bootstrap
     }
 
     get '/' do
-      @text = IO.readlines(File.join("#{File.dirname(__FILE__)}/../config/sample.txt")).join()
+      @text = Content.find(:first).text
       @templates = []
       template_path = "#{File.dirname(__FILE__)}/../public/javascripts/templates"
         Dir.foreach(template_path) do |f| 
           if f[0] != "."
             @templates << {name:f.split('.').first,template:IO.readlines(File.join(template_path,f)).join()}
           end
-         
       end
 
       erb :index

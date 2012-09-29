@@ -1,0 +1,17 @@
+development:
+  host: localhost
+  database: jetty
+  logger: false 
+  use_utc: true
+
+test:
+  host: localhost
+  database: jetty_test
+  logger: false 
+  use_utc: true
+
+# set these environment variables on your prod server
+production:
+  host: localhost
+  database: jetty
+  use_utc: true
