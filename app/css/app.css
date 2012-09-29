@@ -3,12 +3,10 @@ body {
 }
 .manager { 
 	position: absolute;
-	margin: 0 0;
-	top: 0px;
-	left: 20px;
 }
 .authority_manager {
 	background: #FFF;
+	z-index: 20;
 }
 	.authority_manager .tree {
 		height: 300px;
