@@ -1,5 +1,5 @@
 body {
-
+	background: #AAA;
 }
 .manager { 
 	position: absolute;
@@ -20,7 +20,7 @@ body {
 	}
 .content_container {
 	float: left;
-	width: 50%;
+	width: 80%;
 }
 	.content_container .set {
 		position: relative;
@@ -42,9 +42,22 @@ body {
 				font-style: normal;
 				color: rgba(255,255,255,0);
 			}
+		.content_container .set,
+		.content_container .set {
+			margin: 1.5em;
+		}
+		.content_container { 
+			font-size: 16px;
+			line-height: 1.5em;
+			width: 35em;
+			margin: 1.5em;
+			background: #FFFEF0;
+			color: #111;
+			font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, Utopia, serif;
+		}
 .notes_container {
 	float: left;
-	width: 40%;
+	width: 20%;
 	background: #FFF;
 	position: relative;
 }
