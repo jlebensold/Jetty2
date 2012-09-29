@@ -19,8 +19,8 @@ class App.Views.NoteView extends Backbone.View
 	render: ->
 		$(@el).html @template(@model.toJSON())
 		if ($(".content_container").length > 0)
-			offset = $(".content_container .p_"+@model.get('start_paragraph')).offset()
-			top = offset.top - $(".content_container").offset().top
+			offset = $(".content_container .h_"+@model.get('start_paragraph')+" em").offset()
+			top = offset.top - $(".content_container").offset().top + 20
 			$(@el).css({'top': top+'px'})
 
 		self = @

@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-    <div id="readerview" class="container">
+    <div id="readerview" class="row">
       <%= yield %>
     </div> 
   <%= js :application %>
@@ -73,6 +73,8 @@
             children: [] 
     });
     $("#readerview").html(r.render().el)
+    $(".notes_container").css('height',$(".content_container").height()+'px');
+
   });
   </script>
   

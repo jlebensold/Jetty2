@@ -1,5 +1,5 @@
 class App.Views.AuthorityManagerView extends Backbone.View
-	className: "authority_manager span4"
+	className: "authority_manager"
 	events: ->
 		{
 			'click .btn_add_node' : 'add_node'

@@ -1,5 +1,5 @@
 class App.Views.ReaderView extends Backbone.View
-  className: "reader span12"
+  className: "reader"
   events: ->
     {
     }
