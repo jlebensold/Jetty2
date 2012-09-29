@@ -9,6 +9,8 @@ gem 'coffee-script'
 gem 'sass'
 gem 'uglifier'
 gem 'daemons'
+gem 'mongoid'
+
 group :development, :test do
   gem 'jasmine'
   gem 'thin'
