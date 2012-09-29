@@ -70,3 +70,20 @@ describe 'App.Views.TextView', ->
 
 		expect(view.notes.length).toEqual(2)
 
+	it "should not add notes with no characters", ->
+		txt = new App.Models.Content({text: Fixtures.text_text})
+		view = new App.Views.TextView({model: txt})
+		$("testbed").html(view.render().el)
+
+		note = new App.Models.Note({
+			start_paragraph: 1
+			start_paragraph_char: 1
+			end_paragraph: 1
+			end_paragraph_char: 1
+			})
+
+		view.addHighlight note
+
+		expect(view.notes.length).toEqual(0)
+
+

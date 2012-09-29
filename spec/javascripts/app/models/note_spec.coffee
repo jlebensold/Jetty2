@@ -98,3 +98,20 @@ describe 'App.Models.Note', ->
       note.normalize()
       expect(note.get('start_paragraph')).toEqual(4)
 
+    it 'should know how big it is in one paragraph', ->
+      note = new App.Models.Note({
+        start_paragraph:6
+        end_paragraph:6
+        start_paragraph_char: 4
+        end_paragraph_char: 8
+        })
+      expect(note.size()).toEqual("0:4")
+
+    it 'should know how big it is accross paragraphs', ->
+      note = new App.Models.Note({
+        start_paragraph:6
+        end_paragraph:8
+        start_paragraph_char: 4
+        end_paragraph_char: 8
+        })
+      expect(note.size()).toEqual("2:12")

@@ -39,6 +39,17 @@ class App.Models.Note extends Backbone.Model
 
 		@
 
+	size: ->
+		@.normalize();
+
+		p = (@.get('end_paragraph') - @.get('start_paragraph'))
+		if (p > 0)
+			c = @.get('end_paragraph_char') + @.get('start_paragraph_char')
+		else
+			c = @.get('end_paragraph_char') - (@.get('start_paragraph_char'))
+
+		"#{p}:#{c}"
+
 	@fromContent: (content,selection) ->
 		s = selection
 		range = content.getSelectionRange($(s.baseNode.parentNode), $(s.focusNode.parentNode), s.toString())

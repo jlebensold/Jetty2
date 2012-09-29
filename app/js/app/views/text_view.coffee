@@ -14,6 +14,7 @@ class App.Views.TextView extends Backbone.View
 		@addHighlight(note)
 
 	addHighlight: (note) ->
+		return if (note.size() == "0:0")
 		return unless @notes.addUnique(note)
 
 		if (note.get('start_paragraph') == note.get('end_paragraph'))
