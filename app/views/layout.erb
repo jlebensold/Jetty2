@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-    <div id="readerview" class="row">
+    <div id="readerview" class="container">
       <%= yield %>
     </div> 
   <%= js :application %>
@@ -63,9 +63,10 @@
     <script class="tpl" id="<%= t[:name] %>" type="text/template"><%=t[:template]%></script>
   <% end %>
   <script>
+  var r, app;
 
   $(function() { 
-    var app = new App.Application
+    app = new App.Application
     r = new App.Views.ReaderView();
     r.load_content_and_authority("<%=@text.gsub("\n","\\n")%>",  
     {
