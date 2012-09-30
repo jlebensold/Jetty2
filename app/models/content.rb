@@ -8,4 +8,5 @@ class Content
   field :title, type: String
   field :text, type: String 
 
+  has_many :notes
 end

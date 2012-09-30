@@ -14,6 +14,10 @@ module Bootstrap
 
       js :application, '/js/application.js', [
         '/js/vendor/*.js',
+        '/js/app/app*.js',
+        '/js/app/models/*.js',
+        '/js/app/collections/*.js',
+        '/js/app/views/*.js',
         '/js/**/*.js'
       ]
 
@@ -40,6 +44,12 @@ module Bootstrap
 
       erb :index
     end
+
+    get '/notes' do
+      content_type :json
+      Note.find(:all).to_json()
+    end
+
   end
 end
 

@@ -9,6 +9,7 @@ set :run, false
 
 require 'mongoid'
 require './app/models/content.rb'
+require './app/models/note.rb'
 ENV["RACK_ENV"] ||= 'development'
 
 Mongoid.load!("./config/mongoid.yml")

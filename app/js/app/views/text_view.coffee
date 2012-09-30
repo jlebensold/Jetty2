@@ -7,16 +7,26 @@ class App.Views.TextView extends Backbone.View
 		@authorities = @options.authorities
 		_.bindAll @, 'render', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight'
 		@notes = new App.Collections.NoteList()
+		@notes.bind('reset',@.render)
 
 	getSelection: (e) ->
 		e.preventDefault()
 		note = App.Models.Note.fromContent(@model,window.getSelection())
 		@addHighlight(note)
 
+	renderNotes: ->
+		@notes.each ((n) -> 
+			@.renderNote n
+		),@
+
+
 	addHighlight: (note) ->
 		return if (note.size() == "0:0")
 		return unless @notes.addUnique(note)
+		@.renderNote note
+		
 
+	renderNote: (note) ->
 		if (note.get('start_paragraph') == note.get('end_paragraph'))
 			@addSingleParagraphHighlight note
 		else
@@ -24,7 +34,6 @@ class App.Views.TextView extends Backbone.View
 
 		note_view = new App.Views.NoteView({model: note, authorities: @authorities})
 		$(@el).find(".notes_container").append(note_view.render().el)
-
 
 	addMultiParagraphHighlight: (note) ->
 		for i in [note.get('start_paragraph')..note.get('end_paragraph')]
@@ -63,4 +72,5 @@ class App.Views.TextView extends Backbone.View
 			i = i + 1
 		), this
 		$(@el).find(".content_container").html(o)
+		@.renderNotes()
 		return @
