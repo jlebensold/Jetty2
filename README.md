@@ -1,23 +1,6 @@
-sinatra-backbone-bootstrap
+Jetty
 ==========================
-All the goodness of Backbone, Sinatra, Coffeescript with Jasmine and a lightweight responsive css framework (Skeleton).
-
-_GEMS_
- - Sinatra
- - Sinatra-assetpack
- - Coffee-Script
- - SASS
- - Jasmine
- - thin
-
-_JS LIBS_
- - Modernizr 2.5.3
- - BackboneJS 0.9.2
- - UnderscoreJS 1.3.3
- - JQuery 1.7.2
-
-_CSS FRAMEWORK_
- - Skeleton 1.1
+A simple reading environment that supports annotations and a rudimentary taxonomy manager.
 
 GETTING STARTED
 -------------------
@@ -35,18 +18,13 @@ sinonjs has been included for mocking / stubbing / spying as well as jasmine-jqu
 
 Sinatra Assetpack handles coffeescript compilation on the fly, and in production, takes care of minification / uglification of js and coffeescript into 2 discrete files - vendor.js and application.js
 
-Model:
+Current Model:
 ------
-AuthorityRelation
-	type
-	source
-	target
-	text
-
+<pre>
 Authority
-	name
-	parent
-	children
+ 	name
+ 	parent
+ 	children
 
 Content
 	text
@@ -56,8 +34,20 @@ Notes
 	id
 	content_id
 	content_version
-	start_at
-	end_at
+	start_paragraph
+	start_paragraph_char
+	end_paragraph
+	end_paragraph_char
 	authorities: []
 	text
 	timestampable
+</pre>	
+TODO:
+------
+<pre>
+AuthorityRelation
+	type
+	source
+	target
+	text
+</pre>
