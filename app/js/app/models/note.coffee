@@ -3,7 +3,8 @@ class App.Models.Note extends Backbone.Model
 
 	defaults: ->
 		{
-			content: {}
+			content: ""
+			content_id: ""
 			content_version: 1
 			start_paragraph:0
 			end_paragraph:0
@@ -49,16 +50,3 @@ class App.Models.Note extends Backbone.Model
 			c = @.get('end_paragraph_char') - (@.get('start_paragraph_char'))
 
 		"#{p}:#{c}"
-
-	@fromContent: (content,selection) ->
-		s = selection
-		range = content.getSelectionRange($(s.baseNode.parentNode), $(s.focusNode.parentNode), s.toString())
-
-		new App.Models.Note({
-			content: content,
-			start_paragraph: range[0][0]
-			end_paragraph: range[1][0]
-			start_paragraph_char: range[0][1]
-			end_paragraph_char: range[1][2]
-			raw_range: range
-		}).normalize()

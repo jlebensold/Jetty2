@@ -33,7 +33,8 @@ module Bootstrap
     }
 
     get '/' do
-      @text = Content.find(:first).text
+      @content = Content.find(:first)
+      @text = @content.text
       @templates = []
       template_path = "#{File.dirname(__FILE__)}/../public/javascripts/templates"
         Dir.foreach(template_path) do |f| 
@@ -44,7 +45,13 @@ module Bootstrap
 
       erb :index
     end
-
+    post '/notes' do
+      content_type :json
+      json = JSON.parse(request.body.read)
+      n = Note.new(json)
+      n.save()
+      n.to_json()
+    end
     get '/notes' do
       content_type :json
       Note.find(:all).to_json()

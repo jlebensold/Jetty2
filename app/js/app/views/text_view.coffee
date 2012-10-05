@@ -8,11 +8,11 @@ class App.Views.TextView extends Backbone.View
 		_.bindAll @, 'render', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight'
 		@notes = new App.Collections.NoteList()
 		@notes.bind('reset',@.render)
-
+		@notes.bind('add',@.addHighlight)
+		
 	getSelection: (e) ->
 		e.preventDefault()
-		note = App.Models.Note.fromContent(@model,window.getSelection())
-		@addHighlight(note)
+		note = @notes.fromContent(@model,window.getSelection())
 
 	renderNotes: ->
 		@notes.each ((n) -> 
@@ -21,8 +21,11 @@ class App.Views.TextView extends Backbone.View
 
 
 	addHighlight: (note) ->
+		note = new App.Models.Note(note.toJSON())
+		console.log(note)
+		console.log(note.size())
 		return if (note.size() == "0:0")
-		return unless @notes.addUnique(note)
+		#return unless @notes.addUnique(note)
 		@.renderNote note
 		
 
