@@ -55,9 +55,9 @@
         </div>
       </div>
     </div>
-    <div id="readerview" class="container">
-      <%= yield %>
-    </div> 
+    <div id="readerview"></div> 
+    <%= yield %>
+    </div>
   <%= js :application %>
   <% @templates.each do |t|  %>
     <script class="tpl" id="<%= t[:name] %>" type="text/template"><%=t[:template]%></script>

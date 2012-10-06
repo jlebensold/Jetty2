@@ -1,7 +1,9 @@
 class App.Models.Authority extends Backbone.Model
+	@idAttribute: "_id"
+
 	url: ->
-		if  @.get('id')
-			'/authority/' + @.get('id')
+		if  @.get('_id')
+			'/authority/' + @.get('_id')
 		else
 			'/authorities'
 

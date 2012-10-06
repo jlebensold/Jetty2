@@ -3,10 +3,10 @@ body {
 }
 .manager { 
 	position: absolute;
+	z-index: 20;
 }
 .authority_manager {
 	background: #FFF;
-	z-index: 20;
 	border-radius: 5px;
 	border: 1px solid #777;
 	box-shadow: 0px 1px 1px #666;
@@ -23,7 +23,13 @@ body {
 	}
 .content_container {
 	float: left;
-	width: 80%;
+	font-size: 16px;
+	line-height: 1.5em;
+	margin: 1.5em;
+	background: #FFFEF0;
+	color: #111;
+	font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, Utopia, serif;
+
 }
 	.content_container .set {
 		position: relative;
@@ -49,15 +55,7 @@ body {
 		.content_container .set {
 			margin: 1.5em;
 		}
-		.content_container { 
-			font-size: 16px;
-			line-height: 1.5em;
-			width: 35em;
-			margin: 1.5em;
-			background: #FFFEF0;
-			color: #111;
-			font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, Utopia, serif;
-		}
+
 .notes_container {
 	float: left;
 	width: 20%;

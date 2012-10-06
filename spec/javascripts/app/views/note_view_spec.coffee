@@ -4,10 +4,3 @@ describe 'App.Views.NoteView', ->
     view = new App.Views.NoteView({model: new App.Models.Note(), authorities: tree})
     $("#testbed").html(view.render().el)
     expect($("#testbed .note").length).toEqual(1)
-
-  it 'should support tagging', ->
-    nl = new App.Collections.NoteList
-    tree = App.Models.Authority.from_json Fixtures.locale_tree 
-    view = new App.Views.NoteView({model: nl.create(), authorities: tree})
-    $("#testbed").html(view.render().el)
-    

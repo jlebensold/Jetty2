@@ -45,13 +45,26 @@ module Bootstrap
 
       erb :index
     end
+
     post '/notes' do
       content_type :json
-      json = JSON.parse(request.body.read)
-      n = Note.new(json)
+      n = Note.new(JSON.parse(request.body.read))
       n.save()
       n.to_json()
     end
+
+    put '/note/:id' do
+      content_type :json
+      n = Note.find(params[:id])
+      n.update_attributes(JSON.parse(request.body.read))
+      n.to_json()
+    end
+
+    delete '/note/:id' do
+      content_type :json
+      Note.find(params[:id]).destroy().to_json()
+    end
+
     get '/notes' do
       content_type :json
       Note.find(:all).to_json()

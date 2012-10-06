@@ -1,4 +1,13 @@
 class App.Models.Note extends Backbone.Model
+	
+	idAttribute: "_id"
+
+	url: ->
+		if @.get('_id') 
+			"/note/#{this.get('_id')}"
+		else
+			"/notes"
+
 	initialize: ->
 
 	defaults: ->

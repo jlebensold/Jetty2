@@ -13,6 +13,8 @@ class App.Views.ReaderView extends Backbone.View
     $(@el).html @template()
     $(@el).find(".content").html(@txtview.render().el)
     $(@el).find(".manager").html(@am.render().el)
+    $(@el).find('.tree').css('height',($(window).height() - 200) + 'px')
+
     @
 
   load_content_and_authority: (txt,json) -> 

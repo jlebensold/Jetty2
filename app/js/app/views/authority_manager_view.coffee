@@ -15,7 +15,10 @@ class App.Views.AuthorityManagerView extends Backbone.View
 	add_node: (e) -> 
 		e.preventDefault()
 		new_node = App.Models.Authority.from_json({name:$(@el).find('.add_node').val(),children:[]});
-		@model.attach new_node
+		if (new_node.get('name')[0] == '_')
+			@model.attach new_node # FIXME: attach to child
+		else
+			@model.attach new_node
 		@render()
 
 	render_tree: ->
@@ -25,7 +28,6 @@ class App.Views.AuthorityManagerView extends Backbone.View
 	render: ->
 		$(@el).html @template()
 		$(@el).find(".tree").html(@treeview.render().el)
-		$(@el).draggable();
 		self = @
 		$($(@el).find(".tree")).sortable({
 			items: "li", 

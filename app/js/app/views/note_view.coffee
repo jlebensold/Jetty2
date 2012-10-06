@@ -3,11 +3,35 @@ class App.Views.NoteView extends Backbone.View
 	events: ->
 		{
 			'blur input': 'save_note'
+			'mouseover':'mouseon'
+			'mouseout':'mouseoff'
+			'click a.delete': 'delete_note'
+			'click a.collapsable': 'collapsable'
 		}
 	initialize: ->
 		@authorities = @options.authorities
+		@collection = @options.collection
+		@expanded = true
 		@template = _.template($('#note').html())
-		_.bindAll @, 'render', 'save_note'
+		_.bindAll @, 'render', 'save_note', 'delete_note','collapsable', 'mouseon', 'mouseoff'
+
+	mouseon: (e) ->
+		@.trigger('mouseon',@model)
+
+	mouseoff: (e) ->
+		@.trigger('mouseoff',@model)
+
+
+	collapsable: (e) ->
+		e.preventDefault()
+		@expanded = !@expanded
+		if (@expanded)
+			@template = _.template($('#note').html())
+		else
+			@template = _.template($('#note-collapsed').html())
+		
+		$(@el).html @template(@model.toJSON())
+		
 
 	save_note: ->
 		@model.set {
@@ -16,8 +40,17 @@ class App.Views.NoteView extends Backbone.View
 		}
 		@model.save()
 
+	delete_note: (e)->
+		e.preventDefault()
+		@model.collection.remove(@model)
+		@model.destroy()
+		$(@el).remove()
+
+
+
 	render: ->
 		$(@el).html @template(@model.toJSON())
+		$(@el).attr('id','note_'+@model.get('_id'))
 		if ($(".content_container").length > 0)
 			offset = $(".content_container .h_"+@model.get('start_paragraph')+" em").offset()
 			top = offset.top - $(".content_container").offset().top + 20
