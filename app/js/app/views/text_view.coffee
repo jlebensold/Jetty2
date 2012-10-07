@@ -63,8 +63,8 @@ class App.Views.TextView extends Backbone.View
 		p = note.get('start_paragraph')
 		h = $("<div class=\"highlighting h_#{p}\">#{$(@el).find(".p_#{p}").text()}</div>")
 		$(@el).find("div[data-set-id=#{p}]").prepend(h)
-		highlighted_part = h.text().substr(note.get('start_paragraph_char'),note.get('end_paragraph_char'))
-		first_normal_part = h.text().substr(0,note.get('start_paragraph_char'))
+		highlighted_part = h.text().substr(note.get('start_paragraph_char'), note.get('end_paragraph_char') - note.get('start_paragraph_char'))
+		first_normal_part = h.text().substr(0, note.get('start_paragraph_char'))
 		second_normal_part = h.text().substr(note.get('end_paragraph_char'))
 		h.html("#{first_normal_part}<em data-note-id=\"#{note.get('_id')}\" >#{highlighted_part}</em>#{second_normal_part}")
 

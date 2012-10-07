@@ -21,9 +21,9 @@ task :dbseed do
   n = Note.new
   n.version = 1
   n.start_paragraph = 1
-  n.end_paragraph = 2
+  n.end_paragraph = 1
   n.start_paragraph_char = 4
-  n.end_paragraph_char = 4
+  n.end_paragraph_char = 34
   n.content = c
   n.text = "hello world!"
   n.save!

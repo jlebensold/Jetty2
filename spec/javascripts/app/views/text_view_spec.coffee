@@ -25,7 +25,7 @@ describe 'App.Views.TextView', ->
 			start_paragraph:4
 			end_paragraph:4
 			start_paragraph_char: 10
-			end_paragraph_char: 21
+			end_paragraph_char: 31
 			})
 		view.addHighlight note2
 		expect($(".h_4 em").html()).toEqual('the launching of this')
@@ -68,7 +68,7 @@ describe 'App.Views.TextView', ->
 
 		view.addHighlight note2
 
-		expect($(view.el).html()).find('.note').length).toEqual(2)
+		expect($(view.el).find('.note').length).toEqual(2)
 
 	it "should not add notes with no characters", ->
 		txt = new App.Models.Content({text: Fixtures.text_text})
