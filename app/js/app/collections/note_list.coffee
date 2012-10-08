@@ -3,7 +3,7 @@ class App.Collections.NoteList extends Backbone.Collection
   url: "/notes"
 
   #@model: App.Models.Note
-  
+
   model: App.Models.Note
 
   addUnique: (note) ->
@@ -18,7 +18,7 @@ class App.Collections.NoteList extends Backbone.Collection
     self = @
     range = content.getSelectionRange($(s.baseNode.parentNode), $(s.focusNode.parentNode), s)
 
-    @.create({
+    note = new App.Models.Note({
       content_id: content.get('_id'),
       start_paragraph: range[0][0]
       end_paragraph: range[1][0]
@@ -26,3 +26,9 @@ class App.Collections.NoteList extends Backbone.Collection
       end_paragraph_char: range[1][1]
       raw_range: range
     })
+    note.normalize()
+
+    @add(note)
+    note
+
+

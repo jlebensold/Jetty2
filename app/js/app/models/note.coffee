@@ -1,9 +1,9 @@
 class App.Models.Note extends Backbone.Model
-	
+
 	idAttribute: "_id"
 
 	url: ->
-		if @.get('_id') 
+		if @.get('_id')
 			"/note/#{this.get('_id')}"
 		else
 			"/notes"
@@ -39,7 +39,6 @@ class App.Models.Note extends Backbone.Model
 	normalize: ->
 
 		if (@.get('start_paragraph') > @.get('end_paragraph'))
-
 			@.set({
 				start_paragraph:@.get('end_paragraph')
 				end_paragraph:@.get('start_paragraph')
@@ -47,6 +46,13 @@ class App.Models.Note extends Backbone.Model
 				end_paragraph_char:@get('start_paragraph_char')
 				})
 
+		if ((@.get('start_paragraph') == @.get('end_paragraph')) && (@.get('start_paragraph_char') > @.get('end_paragraph_char')))
+			@.set({
+				start_paragraph:@.get('end_paragraph')
+				end_paragraph:@.get('start_paragraph')
+				start_paragraph_char:@get('end_paragraph_char')
+				end_paragraph_char:@get('start_paragraph_char')
+				})
 		@
 
 	size: ->

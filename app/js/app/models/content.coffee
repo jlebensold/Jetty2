@@ -18,7 +18,6 @@ class App.Models.Content extends Backbone.Model
 		p_s = @getParagraph (start)
 		p_e = @getParagraph (end)
 
-		console.log(selection)
 		[
 			[p_s, selection.anchorOffset],
 			[p_e, selection.focusOffset]
