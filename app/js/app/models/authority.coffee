@@ -7,7 +7,24 @@ class App.Models.Authority extends Backbone.Model
 		else
 			'/authorities'
 
-	initialize: ->
+	# FIXME: enable this to work
+	#toJSON: -> 
+		#@.attributes.parent = null
+		#@.attributes.children = null
+	#	params = @.attributes
+#		params.children = null
+#		params.parent = null
+#		params
+
+
+
+	setup_children_for_persistence: (callback) ->
+		@.children().map( (n) ->
+			callback(n) if callback != undefined
+			n = n.toJSON()
+			n.parent = n.children = null
+			n
+		)
 
 	defaults: ->
 		{
@@ -83,10 +100,10 @@ class App.Models.Authority extends Backbone.Model
 		list
 
 	@from_json: (json) ->
-		@root_list = new App.Collections.AuthorityList()
-		result = @root_list.create({name: json.name})
-		root = new App.Models.Authority(result.toJSON())
-		@attach_json_children_to_parent(root, json.children)
+		root_list = new App.Collections.AuthorityList()
+		result = root_list.create({name: json.name})
+		#root = new App.Models.Authority(result.toJSON())
+		@attach_json_children_to_parent(result, json.children)
 
 	@attach_json_children_to_parent: (parent, children) ->
 		for i,child of children
@@ -101,4 +118,4 @@ class App.Models.Authority extends Backbone.Model
 class App.Models.AuthorityBulkSave extends Backbone.Model
 	url: '/authority/bulksave'
 	toJSON: ->
-    this.model
+    this.attributes.model

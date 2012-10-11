@@ -1,11 +1,11 @@
 describe 'App.Models.Authority', ->
 	
 	beforeEach( ->
-		@server = sinon.fakeServer.create();
+		
 	)
 	afterEach( ->
-		@server.restore()
-		console.log @server
+		#@server.restore()
+		#console.log @server
 	)
 
 	it 'should have a default name', ->
@@ -49,13 +49,19 @@ describe 'App.Models.Authority', ->
 		expect(auth.children().last().children().first().root_node().id).toEqual(auth.id)
 
 	it 'should be able to search for a node within the children of a tree', ->
-		@server.respondWith("POST", "/authorities",'{"_id":'+guid()+',"ancestry":"5070a4e065d0c65147000003","children":[],"created_at":"2012-10-11T12:50:31Z","name":"sadfs","order":7,"updated_at":"2012-10-11T12:50:31Z","version":null}')
-		auth = App.Models.Authority.from_json(Fixtures.locale_tree)
+		@server = sinon.fakeServer.create()
+		@server.respondWith("/authorities",serverResponse({_id:"5076cbde65d0c6c248000003",name: "boop"}))
+		#auth = App.Models.Authority.from_json(Fixtures.locale_tree)
 		
 		#canada = auth.children().last().children().first().children().first()
-		canada = new App.Models.Authority({name: "aaaa"})
-		canada.save()
-
+		window.list = new App.Collections.AuthorityList()
+		a = list.create({name:"foooo"},{wait:true})
+		setTimeout(-> 
+			console.log a
+		,1000)
+		#canada = new App.Models.Authority({name: "aaaa"})
+		#canada.save()
+		#console.log canada
 		#expect(auth.search(canada.get('_id')).toEqual(canada)
 
 	it 'should be able to remove a node and its children from the tree', ->
@@ -78,6 +84,12 @@ describe 'App.Models.Authority', ->
 		expect(auth.children().last().children().length).toEqual(8)
 
 `
+
+window.serverResponse = function(data) {
+  console.log(JSON.stringify( data));
+  return [200, { "Content-Type": "application/json" },JSON.stringify(data)];
+}
+
 window.guid = function() {
         var S4 = function() {
            return (((1+Math.random())*0x10000)|0).toString(16).substring(1);

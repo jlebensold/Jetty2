@@ -88,14 +88,12 @@
 
       },this);
       root = _.select(flat_tree,function(t) { return t.added == false; })[0];
-
       root = new App.Models.Authority(root);
-      r = new App.Views.ReaderView();
-      r.load_content_and_authority("<%=@text.gsub("\n","\\n")%>",root);
-      $("#readerview").html(r.render().el)
+      reader = new App.Views.ReaderView();
+      reader.load_content_and_authority("<%=@text.gsub("\n","\\n")%>",root);
+      $("#readerview").html(reader.render().el)
       $(".notes_container").css('height',$(".content_container").height()+'px');
-      r.txtview.notes.fetch();
-
+      reader.txtview.notes.fetch();
     }});
   });
   </script>
