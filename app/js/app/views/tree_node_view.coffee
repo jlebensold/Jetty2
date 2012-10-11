@@ -5,11 +5,13 @@ class App.Views.TreeNodeView extends Backbone.View
 		_.bindAll @, 'render'
 
 	render: -> 
+
 		$(@el).html @template(@model.toJSON())
 
 		el = @el
 		d = @options.depth + 1
 		children_html = $('<ul class="children"></ul>')
+		@model.children().sort();
 		@model.children().each ((child) -> 
 			tnv = new App.Views.TreeNodeView({model: child, depth: d})			
 			$(children_html).append(tnv.render().el)

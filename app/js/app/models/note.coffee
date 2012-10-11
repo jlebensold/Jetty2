@@ -1,5 +1,4 @@
 class App.Models.Note extends Backbone.Model
-
 	idAttribute: "_id"
 
 	url: ->

@@ -1,6 +1,8 @@
 require 'mongoid'
+require 'mongoid-ancestry'
 require './app/models/content.rb'
 require './app/models/note.rb'
+require './app/models/authority.rb'
 ENV["RACK_ENV"] ||= 'development'
 
 Mongoid.load!("./config/mongoid.yml")
@@ -9,7 +11,7 @@ task :dbseed do
 
   Content.destroy_all()
   Note.destroy_all()
-
+  Authority.destroy_all()
   c = Content.new
   c.text = IO.readlines("./config/sample.txt").join()
   c.title = "Sample"
@@ -29,4 +31,18 @@ task :dbseed do
   n.save!
 
   puts "seed from /config/sample.txt successful"
+
+
+
+  a = Authority.new({name: "root"})
+  a.save()
+
+  b = Authority.new({name: "childa"})
+  b.parent = a
+  b.save()
+
+  ba = Authority.new({name: "childb"})
+  ba.parent = a
+  ba.save()
+
 end

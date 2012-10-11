@@ -70,6 +70,40 @@ module Bootstrap
       Note.find(:all).to_json()
     end
 
+#authorities
+    post '/authorities' do
+      content_type :json
+      a = Authority.new(JSON.parse(request.body.read))
+      a.save()
+      a.to_json()
+    end
+
+    post '/authority/bulksave' do
+      models = JSON.parse(request.body.read)
+      models.each do |m|
+        Authority.find(m["_id"]).update_attributes(m)
+      end
+      models.to_json()
+    end
+
+    put '/authority/:id' do
+      content_type :json
+      a = Authority.find(params[:id])
+      a.update_attributes(JSON.parse(request.body.read))
+      a.to_json()
+    end
+
+    delete '/authority/:id' do
+      content_type :json
+      Authority.find(params[:id]).destroy().to_json()
+    end
+
+    get '/authorities' do
+      content_type :json
+      Authority.find(:all).to_json()
+    end
+
+
   end
 end
 

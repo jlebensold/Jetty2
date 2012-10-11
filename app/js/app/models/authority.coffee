@@ -1,5 +1,5 @@
 class App.Models.Authority extends Backbone.Model
-	@idAttribute: "_id"
+	idAttribute: "_id"
 
 	url: ->
 		if  @.get('_id')
@@ -14,10 +14,13 @@ class App.Models.Authority extends Backbone.Model
 			parent: null
 			name: "untitled"
 			children: new App.Collections.AuthorityList
+			order: 0
 		}
 	set_parent: (parent) ->
 		parent.children().add(@)
 		@.set('parent',parent)
+		#TODO:::
+		#@.set('ancestry',parent.get('_id'))
 
 	parent: ->
 		@.get('parent')
@@ -37,12 +40,12 @@ class App.Models.Authority extends Backbone.Model
 
 	remove: (node) ->
 		n = node.root_node()
-		n.search(node.id).detach()
+		n.search(node.get('_id')).detach()
 
 	search: (node_id) ->
 		pointer = @
 		found = null
-		found = pointer if pointer.id == node_id
+		found = pointer if pointer.get('_id') == node_id
 		pointer.children().each( (child) ->
 			child_found = child.search(node_id)
 			if (child_found != null)
@@ -52,12 +55,14 @@ class App.Models.Authority extends Backbone.Model
 
 	attach: (node) ->
 		node.set_parent @		
-		@.root_node().trigger('treechange')
+		#@.root_node().trigger('treechange')
 
 	detach: ->
 		self = @
 		p = @.parent()
-		p.set('children',new App.Collections.AuthorityList(p.children().reject((a) -> a.id == self.id)))
+		p.set('children',new App.Collections.AuthorityList(p.children().reject((a) -> 
+			a.get('_id') == self.get('_id')
+		)))
 		@.set('parent',null)
 		@
 
@@ -67,7 +72,7 @@ class App.Models.Authority extends Backbone.Model
 
 	all_authorities: ->
 		@flattened().models.map((a) -> 
-			{label:a.get('name'),value:a.get('id')}
+			{label:a.get('name'),value:a.get('_id')}
 		)
 	add_to_list: (list,children) ->
 		list.add children.toJSON()
@@ -86,8 +91,14 @@ class App.Models.Authority extends Backbone.Model
 	@attach_json_children_to_parent: (parent, children) ->
 		for i,child of children
 			child_list = new App.Collections.AuthorityList()
-			@result = child_list.create({name:child.name})
+			@result = child_list.create({name:child.name, order: i})
 			@child = new App.Models.Authority(@result.toJSON())
 			@child.set_parent(parent)
 			@attach_json_children_to_parent @child, child.children
 		parent
+
+
+class App.Models.AuthorityBulkSave extends Backbone.Model
+	url: '/authority/bulksave'
+	toJSON: ->
+    this.model

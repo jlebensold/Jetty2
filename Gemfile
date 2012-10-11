@@ -10,6 +10,7 @@ gem 'sass'
 gem 'uglifier'
 gem 'daemons'
 gem 'mongoid'
+gem 'mongoid-ancestry'
 gem 'bson_ext'
 group :development, :test do
   gem 'jasmine'

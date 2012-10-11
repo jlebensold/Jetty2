@@ -17,6 +17,10 @@ src_files:
   - spec/javascripts/support/vendor/**/*.js
   # app files
   - app/js/app/**/*.js
+  - app/js/app/**/app*.js
+  - app/js/app/**/app*.coffee
+  - app/js/app/models/*.coffee
+  - app/js/app/collections/*.coffee
   - app/js/app/**/*.coffee
 
 # stylesheets

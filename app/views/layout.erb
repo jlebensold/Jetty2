@@ -63,19 +63,40 @@
     <script class="tpl" id="<%= t[:name] %>" type="text/template"><%=t[:template]%></script>
   <% end %>
   <script>
-  var r, app;
+  var r, app,root;
 
   $(function() { 
     app = new App.Application
-    r = new App.Views.ReaderView();
-    r.load_content_and_authority("<%=@text.gsub("\n","\\n")%>",  
-    {
-            name: "authority",
-            children: [] 
-    });
-    $("#readerview").html(r.render().el)
-    $(".notes_container").css('height',$(".content_container").height()+'px');
-    r.txtview.notes.fetch();
+
+    al = new App.Collections.AuthorityList();
+    al.fetch({success:function(r){
+      //TODO: refactor this nastyness:
+      flat_tree = r.toJSON()
+      _.each(flat_tree,function(n) { 
+        n.added = false;
+      });
+      _.each(flat_tree,function(n) {
+        if (n.ancestry != null)
+        {
+          n.added = true;
+          found = _.select(flat_tree,function(parent) {
+            return parent._id == n.ancestry;
+          },this)[0];
+          n.parent = new App.Models.Authority(found);
+          found.children.push(n);
+        }
+
+      },this);
+      root = _.select(flat_tree,function(t) { return t.added == false; })[0];
+
+      root = new App.Models.Authority(root);
+      r = new App.Views.ReaderView();
+      r.load_content_and_authority("<%=@text.gsub("\n","\\n")%>",root);
+      $("#readerview").html(r.render().el)
+      $(".notes_container").css('height',$(".content_container").height()+'px');
+      r.txtview.notes.fetch();
+
+    }});
   });
   </script>
   

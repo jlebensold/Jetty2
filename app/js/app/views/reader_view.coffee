@@ -17,8 +17,7 @@ class App.Views.ReaderView extends Backbone.View
 
     @
 
-  load_content_and_authority: (txt,json) -> 
-    tree = App.Models.Authority.from_json(json)
+  load_content_and_authority: (txt,tree) -> 
     @txtview = new App.Views.TextView({model: new App.Models.Content({text: txt}), authorities: tree })
     @am = new App.Views.AuthorityManagerView({model: tree})
 
