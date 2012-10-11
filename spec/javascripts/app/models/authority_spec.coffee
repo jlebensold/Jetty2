@@ -1,10 +1,10 @@
 describe 'App.Models.Authority', ->
 	
 	beforeEach( ->
-		
+		@server = sinon.fakeServer.create()		
 	)
 	afterEach( ->
-		#@server.restore()
+		@server.restore()
 		#console.log @server
 	)
 
@@ -34,66 +34,56 @@ describe 'App.Models.Authority', ->
 
 		expect(parent.children().length).toEqual(2)
 
-	it 'should generate tree from JSON', -> 
-		json = Fixtures.locale_tree 
-		auth = App.Models.Authority.from_json(json)
-		expect(auth.children().last().children().first().children().first().get('name')).toEqual('Canada')
-
 	it 'should be able to determine a root node', ->
-		auth = App.Models.Authority.from_json(Fixtures.locale_tree )
-		expect(auth.is_root_node()).toBeTruthy()
-		expect(auth.children().last().children().first().is_root_node()).toBeFalsy()
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+
+		expect(auth.first().is_root_node()).toBeTruthy()
+		expect(auth.first().children().last().children().first().is_root_node()).toBeFalsy()
 
 	it 'should be able to navigate to root node', ->
-		auth = App.Models.Authority.from_json(Fixtures.locale_tree )
-		expect(auth.children().last().children().first().root_node().id).toEqual(auth.id)
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+
+		expect(auth.first().children().last().children().first().root_node().id).toEqual(auth.first().id)
 
 	it 'should be able to search for a node within the children of a tree', ->
-		@server = sinon.fakeServer.create()
-		@server.respondWith("/authorities",serverResponse({_id:"5076cbde65d0c6c248000003",name: "boop"}))
-		#auth = App.Models.Authority.from_json(Fixtures.locale_tree)
 		
-		#canada = auth.children().last().children().first().children().first()
-		window.list = new App.Collections.AuthorityList()
-		a = list.create({name:"foooo"},{wait:true})
-		setTimeout(-> 
-			console.log a
-		,1000)
-		#canada = new App.Models.Authority({name: "aaaa"})
-		#canada.save()
-		#console.log canada
-		#expect(auth.search(canada.get('_id')).toEqual(canada)
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+
+		canada = auth.first().children().last().children().first().children().first()
+		expect(auth.first().search(canada.get('_id'))).toEqual(canada)
 
 	it 'should be able to remove a node and its children from the tree', ->
-		json = Fixtures.locale_tree 
-		auth = App.Models.Authority.from_json(json)
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+		auth = auth.first()
 		canada = auth.children().last().children().first().children().first()
 		expect(auth.children().last().children().first().children().length).toEqual(1)
 		auth.remove canada		
 		expect(auth.children().last().children().first().children().length).toEqual(0)
 	
 	it 'should be able to move stuff around the tree', ->
-		json = Fixtures.locale_tree 
-		auth = App.Models.Authority.from_json(json)
-		expect(auth.children().last().children().length).toEqual(7)
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+		auth = auth.first()
+
+		expect(auth.children().last().children().length).toEqual(5)
 		
 		canada = auth.children().last().children().first().children().first()
 		auth.remove canada
 		auth.children().last().attach canada
 
-		expect(auth.children().last().children().length).toEqual(8)
+		expect(auth.children().last().children().length).toEqual(6)
 
-`
-
-window.serverResponse = function(data) {
-  console.log(JSON.stringify( data));
-  return [200, { "Content-Type": "application/json" },JSON.stringify(data)];
-}
-
-window.guid = function() {
-        var S4 = function() {
-           return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-        };
-        return (S4()+S4()+S4()+S4()+S4());
-      }
-`

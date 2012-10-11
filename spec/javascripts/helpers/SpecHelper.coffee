@@ -17,3 +17,12 @@ beforeEach ->
 	_.each fx, ((item,key) ->
 		$("body").append('<script class="tpl" id="'+_.last(key.split("/")).split(".")[0]+'" type="text/template">'+item+'</script>')
 	), this
+
+
+`
+
+window.serverResponse = function(data) {
+  return [200, { "Content-Type": "application/json" },JSON.stringify(data)];
+}
+
+`

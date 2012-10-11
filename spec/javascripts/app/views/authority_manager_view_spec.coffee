@@ -1,11 +1,31 @@
 describe 'App.Views.AuthorityManagerView', ->
+	beforeEach( ->
+		@server = sinon.fakeServer.create()		
+	)
+	afterEach( ->
+		@server.restore()
+		#console.log @server
+	)
+
 	it 'should render a box with a treeview, filter box and form control', ->
-		am = new App.Views.AuthorityManagerView({model: App.Models.Authority.from_json(Fixtures.locale_tree)})
+
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+
+		am = new App.Views.AuthorityManagerView({collection:auth})
 		$("#testbed").html(am.render().el)
 		expect($("#testbed .authority_manager").length).toBe(1)
 
 	it 'should update the authority when a drag-drop is completed', ->
-		am = new App.Views.AuthorityManagerView({model: App.Models.Authority.from_json(Fixtures.locale_tree)})
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+
+		am = new App.Views.AuthorityManagerView({collection:auth})
+
 		$("#testbed").html(am.render().el)
 		node_id = $("#testbed em:contains('Montreal')").parent('div').data('node-id')
 		target_node_id = $("#testbed em:contains('Ontario')").parent('div').data('node-id')
@@ -17,12 +37,21 @@ describe 'App.Views.AuthorityManagerView', ->
 		
 
 	it 'should allow adding of tree nodes', -> 
-		am = new App.Views.AuthorityManagerView({model: App.Models.Authority.from_json({name: "root", children: []})})
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+
+		@server.respondWith("POST","/authorities",serverResponse(Fixtures.new_node))
+
+		am = new App.Views.AuthorityManagerView({collection:auth})
+
 		$("#testbed").html(am.render().el)
 		$("#testbed .add_node").val("Test")
 		$("#testbed .btn_add_node").click()
+		@server.respond()
 
-		expect(am.model.children().length).toBe 1
+		expect(am.model.children().length).toBe 5
 		
 
 		
