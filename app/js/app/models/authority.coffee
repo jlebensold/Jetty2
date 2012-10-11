@@ -7,17 +7,6 @@ class App.Models.Authority extends Backbone.Model
 		else
 			'/authorities'
 
-	# FIXME: enable this to work
-	#toJSON: -> 
-		#@.attributes.parent = null
-		#@.attributes.children = null
-	#	params = @.attributes
-#		params.children = null
-#		params.parent = null
-#		params
-
-
-
 	setup_children_for_persistence: (callback) ->
 		@.children().map( (n) ->
 			callback(n) if callback != undefined
@@ -25,6 +14,10 @@ class App.Models.Authority extends Backbone.Model
 			n.parent = n.children = null
 			n
 		)
+
+	parse: (params,xhr) -> 
+		params.children = new App.Collections.AuthorityList()
+		params
 
 	defaults: ->
 		{
@@ -36,8 +29,6 @@ class App.Models.Authority extends Backbone.Model
 	set_parent: (parent) ->
 		parent.children().add(@)
 		@.set('parent',parent)
-		#TODO:::
-		#@.set('ancestry',parent.get('_id'))
 
 	parent: ->
 		@.get('parent')
@@ -75,11 +66,7 @@ class App.Models.Authority extends Backbone.Model
 		#@.root_node().trigger('treechange')
 
 	detach: ->
-		self = @
-		p = @.parent()
-		p.set('children',new App.Collections.AuthorityList(p.children().reject((a) -> 
-			a.get('_id') == self.get('_id')
-		)))
+		@.parent().children().remove @
 		@.set('parent',null)
 		@
 

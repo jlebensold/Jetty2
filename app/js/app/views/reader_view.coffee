@@ -4,19 +4,24 @@ class App.Views.ReaderView extends Backbone.View
     {
     }
   initialize: ->
-    _.bindAll @, 'render','load_content_and_authority'
+    _.bindAll @, 'render'
     @template = _.template($('#reader').html())
-    @authorities = @options.authorities
+    
+
+    #FIXME refactor me away
+    @collection.on('reset', @render)
+
     @
   render: ->
-
     $(@el).html @template()
+
+    @txtview = new App.Views.TextView({model: @model, authorities: @collection.first() })
+    @am = new App.Views.AuthorityManagerView({collection: @collection})
+    @txtview.notes.fetch();
+
     $(@el).find(".content").html(@txtview.render().el)
     $(@el).find(".manager").html(@am.render().el)
-
     @
 
-  load_content_and_authority: (txt,tree) -> 
-    @txtview = new App.Views.TextView({model: new App.Models.Content({text: txt}), authorities: tree })
-    @am = new App.Views.AuthorityManagerView({model: tree})
+
 

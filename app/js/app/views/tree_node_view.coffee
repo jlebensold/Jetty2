@@ -3,6 +3,8 @@ class App.Views.TreeNodeView extends Backbone.View
 	initialize: ->
 		@template = _.template($('#tree_node').html())
 		_.bindAll @, 'render'
+		@model.children().on('remove', @render)
+		@model.children().on('add', @render)
 
 	render: -> 
 

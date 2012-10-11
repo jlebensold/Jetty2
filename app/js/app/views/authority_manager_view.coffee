@@ -7,26 +7,24 @@ class App.Views.AuthorityManagerView extends Backbone.View
 			'click .destroy'			: 'destroy'
 		}
 	initialize: ->
-		_.bindAll @, 'render', 'render_tree', 'add_node', 'make_child', 'destroy'
+		_.bindAll @, 'render', 'add_node', 'make_child', 'destroy'
 		@template = _.template($('#authority_manager').html())
-		@treeview = new App.Views.TreeNodeView({model: @model})
-		@model.bind('treechange',@render_tree)
+		@treeview = new App.Views.TreeNodeView({model: @collection.first() })
+		@model = @collection.first()
 		@bulksave = new App.Models.AuthorityBulkSave()
-		#@bulksave.bind('change',(r) -> 
-		#	console.log r
-		#)
 		@
 
 	destroy: (e) -> 
 		e.preventDefault()
 		view = @
-		self = @model.search $(e.target).parent().data('node-id')
-		saveset = self.setup_children_for_persistence((n) -> 
-			n.set('ancestry',self.parent().get('_id'))
+		node = @model.search $(e.target).parent().data('node-id')
+		saveset = node.setup_children_for_persistence((n) -> 
+			n.set('ancestry',node.parent().get('_id'))
+			n.detach()
+			node.get('parent').attach n
 		)
-		
-		self.destroy()
-		@bulksave.save({model: saveset})
+		node.destroy()
+		@bulksave.save({ model: saveset })
 
 		
 	make_child: (e) -> 
@@ -35,14 +33,14 @@ class App.Views.AuthorityManagerView extends Backbone.View
 		new_parent = @model.search $(e.target).parent().parent().prev().find('div').data('node-id')
 		view = @
 		
+		children = self.children()
+		self.detach()
+		
 		self.save({ancestry:new_parent.get('_id'), order: -1, children: null,parent: null}, {
 			wait: true,
 			success: (r) ->
-				c = new App.Collections.AuthorityList 
-				if self.get('children') != undefined
-					c = self.get('children')
-				r.set('children',c)
-				r.set('parent',new_parent)
+				r.set('children', children)
+				r.set_parent(new_parent)
 		})
 		
 
@@ -56,14 +54,8 @@ class App.Views.AuthorityManagerView extends Backbone.View
 		},{
 		wait: true
 		success: (r) ->
-			r.set('children',new App.Collections.AuthorityList)
 			r.set('parent',self.model)
-			self.model.trigger('treechange')
 		})
-
-	render_tree: ->
-		@treeview = new App.Views.TreeNodeView({model: @model})
-		$(@el).find(".tree").html(@treeview.render().el)
 		
 	render: ->
 		$(@el).html @template()
