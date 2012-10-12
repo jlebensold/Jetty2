@@ -6,7 +6,6 @@ describe 'App.Views.TreeNodeView', ->
   )
   afterEach( ->
     @server.restore()
-    #console.log @server
   )
 
 	it 'should render a tree', ->

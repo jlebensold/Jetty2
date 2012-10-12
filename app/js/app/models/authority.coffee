@@ -61,6 +61,12 @@ class App.Models.Authority extends Backbone.Model
 		)
 		found
 
+
+	in: (array) -> 
+		_.map array, (id) => 
+			@.search id
+
+
 	attach: (node) ->
 		node.set_parent @		
 		#@.root_node().trigger('treechange')

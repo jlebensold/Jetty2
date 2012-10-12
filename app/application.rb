@@ -103,6 +103,11 @@ module Bootstrap
       Authority.find(:all).to_json()
     end
 
+    get '/authorities/as_tags' do
+      content_type :json
+      Authority.where({ :name =>  Regexp.new(/.*#{params[:term]}.*/i)  }).map {|a| {label:a.name,id:a._id,value:a.name} }.to_json()
+    end
+
 
   end
 end

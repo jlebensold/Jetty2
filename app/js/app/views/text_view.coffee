@@ -42,6 +42,8 @@ class App.Views.TextView extends Backbone.View
 			$("em[data-note-id=#{n.get('_id')}]").css('background','yellow')
 		,@)
 		$(@el).find(".notes_container").append(note_view.render().el)
+		note_view.init_tags()
+
 
 	addMultiParagraphHighlight: (note) ->
 		for i in [note.get('start_paragraph')..note.get('end_paragraph')]

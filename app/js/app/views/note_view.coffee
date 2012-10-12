@@ -13,13 +13,43 @@ class App.Views.NoteView extends Backbone.View
 		@collection = @options.collection
 		@expanded = true
 		@template = _.template($('#note').html())
-		_.bindAll @, 'render', 'save_note', 'delete_note','collapsable', 'mouseon', 'mouseoff'
+		_.bindAll @, 'render', 'save_note', 'delete_note','collapsable', 'mouseon', 'mouseoff', 'init_tags'
 
 	mouseon: (e) ->
 		@.trigger('mouseon',@model)
 
 	mouseoff: (e) ->
 		@.trigger('mouseoff',@model)
+
+	init_tags: ->
+		$(@el).find('input[name=authorities]').tagsInput({    
+		autocomplete_url:'/authorities/as_tags'
+		autocomplete:
+			selectFirst:true
+			width:'100px'
+			autoFill:true
+
+		onAddTag: (e,options) => 
+			@model.get('authorities').push options.item.id
+			@model.save()
+
+		onRemoveTag: (e,item) =>
+			@model.set('authorities',_.reject(@model.get('authorities'),(a) -> a == item.id))
+			@model.save()
+
+		})
+		_.each(@model.get('authorities'), (id) =>
+			a = @authorities.search(id)
+			$(@el).find('input[name=authorities]').addTag(a.get('name'),{
+			focus:false
+			callback:false
+			item:
+				id:id
+				label:a.get('name')
+				value:a.get('name')
+			})
+		,@)
+
 
 
 	collapsable: (e) ->
@@ -35,8 +65,7 @@ class App.Views.NoteView extends Backbone.View
 
 	save_note: ->
 		@model.set {
-			'authorities':_.compact( App.Views.NoteView.split($(@el).find('.authorities').data('authorities'))),
-			'text':$(@el).find('.text').val()
+			text: $(@el).find('.text').val()
 		}
 		@model.save()
 
@@ -49,39 +78,16 @@ class App.Views.NoteView extends Backbone.View
 
 
 	render: ->
-		$(@el).html @template(@model.toJSON())
+		json = {
+			authorities: _.map(@authorities.in(@model.get('authorities')), (a) -> a.toJSON()).join(',')
+			note: @model.toJSON()
+		}
+		$(@el).html @template(json)
 		$(@el).attr('id','note_'+@model.get('_id'))
 		if ($(".content_container").length > 0)
 			offset = $(".content_container .h_"+@model.get('start_paragraph')+" em").offset()
 			top = offset.top - $(".content_container").offset().top + 20
 			$(@el).css({'top': top+'px'})
-
-		self = @
-		$(@el).find(".authorities").bind("keydown", (event) ->
-			event.preventDefault()  if event.keyCode is $.ui.keyCode.TAB and $(this).data("autocomplete").menu.active
-		).autocomplete({
-		  minLength: 0
-		  source: (request, response) ->
-		    # delegate back to autocomplete, but extract the last term
-		    response $.ui.autocomplete.filter(self.authorities.all_authorities(), App.Views.NoteView.extractLast(request.term))
-			focus: ->
-				# prevent value inserted on focus
-				false
-
-			select: (event, ui) ->
-				terms = App.Views.NoteView.split(@value)
-				terms.pop()
-				terms.push ui.item.label
-				terms.push ""
-
-				authorities = App.Views.NoteView.split($(self.el).find(".authorities").data('authorities'))
-				authorities.pop()
-				authorities.push ui.item.value
-				authorities.push ""				
-				@value = terms.join(", ")
-				$(self.el).find(".authorities").data('authorities',authorities.join(", "))
-				false
-			})
 		@
 
 	@split:(val) ->
