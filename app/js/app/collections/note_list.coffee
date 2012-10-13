@@ -24,8 +24,5 @@ class App.Collections.NoteList extends Backbone.Collection
       raw_range: range
     })
     note.normalize()
-
-    @add(note)
-    note
-
+    @add note
 

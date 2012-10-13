@@ -1,11 +1,12 @@
 class App.Views.TextView extends Backbone.View
 	events: ->
-		"mouseup p": "getSelection"
+		"mouseup p"							 : "getSelection"
+		"click .highlighting em" : "highlightClicked"
 
 	initialize: ->
 		@template = _.template($('#content').html())
 		@authorities = @options.authorities
-		_.bindAll @, 'render', 'renderNote','renderNotes', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight'
+		_.bindAll @, 'render', 'renderNote','renderNotes', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight', 'highlightClicked'
 		@notes = new App.Collections.NoteList()
 		@notes.bind('reset',@.render)
 		@notes.bind('add',@.addHighlight)
@@ -13,17 +14,21 @@ class App.Views.TextView extends Backbone.View
 
 	getSelection: (e) ->
 		e.preventDefault()
-		note = @notes.fromContent(@model,window.getSelection())
+		@notes.fromContent(@model,window.getSelection())
+
+
+	highlightClicked: (e) ->
+		e.preventDefault()
 
 	renderNotes: ->
 		$(@el).find('.highlighting').remove()
+		$(@el).find('.note').remove()
 		@notes.each ((n) -> 
 			@.renderNote n
 		),@
 
 
 	addHighlight: (note) ->
-		#note = new App.Models.Note(note.toJSON())
 		return if (note.size() == "0:0")
 		@.renderNote note
 		
@@ -36,7 +41,7 @@ class App.Views.TextView extends Backbone.View
 
 		note_view = new App.Views.NoteView({model: note,collection: note.collection, authorities: @authorities})
 		note_view.bind('mouseon',(n) -> 
-			$("em[data-note-id=#{n.get('_id')}]").css('background','#FFF')
+			$("em[data-note-id=#{n.get('_id')}]").css('background','lime')
 		,@)
 		note_view.bind('mouseoff',(n) -> 
 			$("em[data-note-id=#{n.get('_id')}]").css('background','yellow')

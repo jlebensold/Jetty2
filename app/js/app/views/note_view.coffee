@@ -11,9 +11,8 @@ class App.Views.NoteView extends Backbone.View
 	initialize: ->
 		@authorities = @options.authorities
 		@collection = @options.collection
-		@expanded = true
-		@template = _.template($('#note').html())
-		_.bindAll @, 'render', 'save_note', 'delete_note','collapsable', 'mouseon', 'mouseoff', 'init_tags'
+		@.set_template()		
+		_.bindAll @, 'render', 'save_note', 'delete_note','collapsable', 'mouseon', 'mouseoff', 'init_tags','set_template'
 
 	mouseon: (e) ->
 		@.trigger('mouseon',@model)
@@ -50,17 +49,20 @@ class App.Views.NoteView extends Backbone.View
 			})
 		,@)
 
+	set_template: ->
+		#if (@model.get('collapsed'))
+		@template = _.template($('#note').html())
+		#	$(@el).css('background','')
+		#else
+		#	@template = _.template($('#note-collapsed').html())
+			#$(@el).css('background','none')
 
 
 	collapsable: (e) ->
 		e.preventDefault()
-		@expanded = !@expanded
-		if (@expanded)
-			@template = _.template($('#note').html())
-		else
-			@template = _.template($('#note-collapsed').html())
-		
-		$(@el).html @template(@model.toJSON())
+		#@model.save({'collapsed':!@model.get('collapsed')})
+		#@.set_template()		
+		#@.render()
 		
 
 	save_note: ->
@@ -73,7 +75,7 @@ class App.Views.NoteView extends Backbone.View
 		e.preventDefault()
 		@model.collection.remove(@model)
 		@model.destroy()
-		$(@el).remove()
+		
 
 
 
@@ -88,6 +90,7 @@ class App.Views.NoteView extends Backbone.View
 			offset = $(".content_container .h_"+@model.get('start_paragraph')+" em").offset()
 			top = offset.top - $(".content_container").offset().top + 20
 			$(@el).css({'top': top+'px'})
+		#@.trigger('rendered')
 		@
 
 	@split:(val) ->

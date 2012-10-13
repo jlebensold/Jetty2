@@ -20,7 +20,7 @@ class App.Models.Note extends Backbone.Model
 			end_paragraph_char: 0
 			raw_range: []
 			authorities: []
-			text: "very interesting!"
+			text: ""
 		}
 
 	contains: (other) ->

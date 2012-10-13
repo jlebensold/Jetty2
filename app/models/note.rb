@@ -12,5 +12,6 @@ class Note
   field :raw_range,             type: Array
   field :authorities,           type: Array
   field :text,                  type: String
+  field :collapsed,             type: Boolean
   belongs_to :content
 end
