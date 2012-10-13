@@ -11,7 +11,6 @@ class App.Views.TreeNodeView extends Backbone.View
 		@model.children().on('add', @render)
 		@bulksave = new App.Models.AuthorityBulkSave()
 
-
 	make_child: (e) -> 
 		e.preventDefault()
 		new_parent = @model.root_node().search $(e.target).parent().parent().parent().parent().prev().find('div').data('node-id')
@@ -24,10 +23,7 @@ class App.Views.TreeNodeView extends Backbone.View
 				r.set('children', children)
 				r.set_parent(new_parent)
 		})
-		return false
-		
-		
-
+		false
 
 	destroy: (e) -> 
 		e.preventDefault()
