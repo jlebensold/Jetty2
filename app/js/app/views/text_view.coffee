@@ -1,12 +1,11 @@
 class App.Views.TextView extends Backbone.View
 	events: ->
 		"mouseup p"							 : "getSelection"
-		"click .highlighting em" : "highlightClicked"
 
 	initialize: ->
 		@template = _.template($('#content').html())
 		@authorities = @options.authorities
-		_.bindAll @, 'render', 'renderNote','renderNotes', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight', 'highlightClicked'
+		_.bindAll @, 'render', 'renderNote','renderNotes', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight'
 		@notes = new App.Collections.NoteList()
 		@notes.bind('reset',@.render)
 		@notes.bind('add',@.addHighlight)
@@ -16,10 +15,6 @@ class App.Views.TextView extends Backbone.View
 	getSelection: (e) ->
 		e.preventDefault()
 		@notes.fromContent(@model,window.getSelection())
-
-
-	highlightClicked: (e) ->
-		e.preventDefault()
 
 	renderNotes: ->
 		$(@el).find('.highlighting').remove()
