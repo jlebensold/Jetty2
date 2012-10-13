@@ -63,16 +63,17 @@ class App.Models.Authority extends Backbone.Model
 
 
 	in: (array) -> 
-		_.map array, (id) => 
+		f = _.map array, (id) => 
 			@.search id
+		_.compact(f)
 
 
 	attach: (node) ->
 		node.set_parent @		
-		#@.root_node().trigger('treechange')
 
 	detach: ->
-		@.parent().children().remove @
+		unless @.parent() == null
+			@.parent().children().remove @ 
 		@.set('parent',null)
 		@
 

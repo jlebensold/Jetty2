@@ -1,34 +1,14 @@
 class App.Views.AuthorityManagerView extends Backbone.View
 	className: "authority_manager"
 	events: ->
-		{
 			'click .btn_add_node' : 'add_node'
-			'click .make_child'		: 'make_child'
-		}
 	initialize: ->
-		_.bindAll @, 'render', 'add_node', 'make_child'
+		_.bindAll @, 'render', 'add_node'
 		@template = _.template($('#authority_manager').html())
 		@treeview = new App.Views.TreeNodeView({model: @collection.first() })
 		@model = @collection.first()
 		@bulksave = new App.Models.AuthorityBulkSave()
 		@
-
-		
-	make_child: (e) -> 
-		e.preventDefault()
-		self = @model.search $(e.target).parent().parent().parent().data('node-id')
-		new_parent = @model.search $(e.target).parent().parent().parent().parent().prev().find('div').data('node-id')
-	
-		children = self.children()
-		self.detach()
-		
-		self.save({ancestry:new_parent.get('_id'), order: -1, children: null,parent: null}, {
-			wait: true,
-			success: (r) ->
-				r.set('children', children)
-				r.set_parent(new_parent)
-		})
-		
 
 	add_node: (e) -> 
 		e.preventDefault()

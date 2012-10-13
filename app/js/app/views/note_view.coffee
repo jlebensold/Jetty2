@@ -39,6 +39,7 @@ class App.Views.NoteView extends Backbone.View
 		})
 		_.each(@model.get('authorities'), (id) =>
 			a = @authorities.search(id)
+			return if a == null
 			$(@el).find('input[name=authorities]').addTag(a.get('name'),{
 			focus:false
 			callback:false

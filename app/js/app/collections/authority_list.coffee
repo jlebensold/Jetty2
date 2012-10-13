@@ -1,5 +1,4 @@
 class App.Collections.AuthorityList extends Backbone.Collection
-  #localStorage: new Backbone.LocalStorage("authorities")
   url: "/authorities"
   model: App.Models.Authority
 
@@ -26,7 +25,3 @@ class App.Collections.AuthorityList extends Backbone.Collection
       t.added is false
     )[0]
     new App.Models.Authority(root)
-
-
-      #reader.load_content_and_authority(,r.first());
-      #$(".notes_container").css('height',$(".content_container").height()+'px');
