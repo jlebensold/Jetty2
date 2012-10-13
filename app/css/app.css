@@ -16,6 +16,9 @@ body {
 		overflow: scroll;
 		margin: 0 0;
 	}
+	.authority_manager .tree > li:first-child > div:first-child {
+		display:none;
+	}
 	.authority_manager .tree .buttons {
 		display:none;
 		float: right;
