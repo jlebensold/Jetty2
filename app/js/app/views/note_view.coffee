@@ -50,19 +50,18 @@ class App.Views.NoteView extends Backbone.View
 		,@)
 
 	set_template: ->
-		#if (@model.get('collapsed'))
-		@template = _.template($('#note').html())
-		#	$(@el).css('background','')
-		#else
-		#	@template = _.template($('#note-collapsed').html())
-			#$(@el).css('background','none')
+		if (@model.get('collapsed'))
+			@template = _.template($('#note').html())
+			$(@el).css('background','')
+		else
+			@template = _.template($('#note-collapsed').html())
+			$(@el).css('background','none')
 
 
 	collapsable: (e) ->
 		e.preventDefault()
-		#@model.save({'collapsed':!@model.get('collapsed')})
-		#@.set_template()		
-		#@.render()
+		@model.save({'collapsed':!@model.get('collapsed')})
+		@.set_template()		
 		
 
 	save_note: ->

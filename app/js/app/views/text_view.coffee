@@ -11,6 +11,7 @@ class App.Views.TextView extends Backbone.View
 		@notes.bind('reset',@.render)
 		@notes.bind('add',@.addHighlight)
 		@notes.bind('remove',@.renderNotes)
+		@notes.bind('change:collapsed',@.renderNotes)
 
 	getSelection: (e) ->
 		e.preventDefault()
