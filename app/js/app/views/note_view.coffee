@@ -2,7 +2,7 @@ class App.Views.NoteView extends Backbone.View
 	className: "note"
 	events: ->
 		{
-			'blur input': 'save_note'
+			'blur textarea': 'save_note'
 			'mouseover':'mouseon'
 			'mouseout':'mouseoff'
 			'click a.delete': 'delete_note'

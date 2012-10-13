@@ -4,35 +4,21 @@ class App.Views.AuthorityManagerView extends Backbone.View
 		{
 			'click .btn_add_node' : 'add_node'
 			'click .make_child'		: 'make_child'
-			'click .destroy'			: 'destroy'
 		}
 	initialize: ->
-		_.bindAll @, 'render', 'add_node', 'make_child', 'destroy'
+		_.bindAll @, 'render', 'add_node', 'make_child'
 		@template = _.template($('#authority_manager').html())
 		@treeview = new App.Views.TreeNodeView({model: @collection.first() })
 		@model = @collection.first()
 		@bulksave = new App.Models.AuthorityBulkSave()
 		@
 
-	destroy: (e) -> 
-		e.preventDefault()
-		view = @
-		node = @model.search $(e.target).parent().data('node-id')
-		saveset = node.setup_children_for_persistence((n) -> 
-			n.set('ancestry',node.parent().get('_id'))
-			n.detach()
-			node.get('parent').attach n
-		)
-		node.destroy()
-		@bulksave.save({ model: saveset })
-
 		
 	make_child: (e) -> 
 		e.preventDefault()
-		self = @model.search $(e.target).parent().data('node-id')
-		new_parent = @model.search $(e.target).parent().parent().prev().find('div').data('node-id')
-		view = @
-		
+		self = @model.search $(e.target).parent().parent().parent().data('node-id')
+		new_parent = @model.search $(e.target).parent().parent().parent().parent().prev().find('div').data('node-id')
+	
 		children = self.children()
 		self.detach()
 		

@@ -1,10 +1,27 @@
 class App.Views.TreeNodeView extends Backbone.View
 	tagName: "li"
+	events: ->
+		'click .destroy' : 'destroy'
 	initialize: ->
 		@template = _.template($('#tree_node').html())
-		_.bindAll @, 'render'
+		_.bindAll @, 'render', 'destroy'
 		@model.children().on('remove', @render)
 		@model.children().on('add', @render)
+		@bulksave = new App.Models.AuthorityBulkSave()
+
+	destroy: (e) -> 
+		e.preventDefault()
+		node = @model
+
+		saveset = node.setup_children_for_persistence((n) -> 
+			n.set('ancestry',node.parent().get('_id'))
+			n.detach()
+			node.get('parent').attach n
+		)
+		node.destroy()
+		if (saveset.length > 0)
+			@bulksave.save({ model: saveset })
+		false
 
 	render: -> 
 

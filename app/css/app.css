@@ -14,10 +14,38 @@ body {
 	.authority_manager .tree {
 		height: 300px;
 		overflow: scroll;
+		margin: 0 0;
+	}
+	.authority_manager .tree .buttons {
+		display:none;
+		float: right;
+		clear: both;
+		margin: 0 5px 0 0;
+		position: relative;
+		
+	}
+		.authority_manager .tree .buttons a {
+			display:block;
+			position: absolute;
+			background: #FFF;
+			padding: 0x 2px;
+		}
+	.authority_manager .tree li div:hover > .buttons {
+		display: block;
+	}
+	.authority_manager .tree li div:hover > .buttons a:hover {
+		background: #E5E5E5;
+	}
+	.authority_manager .tree li,
+	.authority_manager .tree ul {
+		list-style:none;
+		padding: 0 0 0 8px;
+		margin: 0 0 0 0px;
 	}
 	.authority_manager ul.tree li div{
-		background: #F3F3F3;
-		margin: 1px 0px;
+		background: #FFF;
+		border-bottom: 1px solid #F0F0F0;
+		margin: 5px 0px;
 		font-size: 12px;
 
 	}
@@ -67,6 +95,7 @@ body {
 		border-radius: 5px;
 		padding: 5px;
 	}
+
 
 /* tags  */
 div.tagsinput { border:1px solid #CCC; background: #FFF; padding:5px; width:300px; height:100px; overflow-y: auto;}
