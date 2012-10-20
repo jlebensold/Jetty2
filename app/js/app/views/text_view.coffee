@@ -6,7 +6,9 @@ class App.Views.TextView extends Backbone.View
 		@template = _.template($('#content').html())
 		@authorities = @options.authorities
 		_.bindAll @, 'render', 'renderNote','renderNotes', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight'
+
 		@notes = new App.Collections.NoteList()
+		@notes.content_id = @model.get('_id')
 		@notes.bind('reset',@.render)
 		@notes.bind('add',@.addHighlight)
 		@notes.bind('remove',@.renderNotes)

@@ -47,15 +47,13 @@
           <a class="brand" href="#">Jetty</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="#home">Library</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
-    <div id="readerview"></div> 
+    <div id="app"></div> 
     <%= yield %>
     </div>
   <%= js :application %>
@@ -64,22 +62,6 @@
   <% end %>
   <script>
   var r, app,root;
-
-  $(function() { 
-    //app = new App.Application
-    
-    al = new App.Collections.AuthorityList();
-    content = new App.Models.Content({text: "<%=@text.gsub("\n","\\n")%>"});
-    new App.Views.ReaderView({collection: al, el:"#readerview", model: content });
-    al.fetch();
-    
-
-
-
-
-
-
-  });
   </script>
   
 

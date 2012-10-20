@@ -1,6 +1,7 @@
 class App.Collections.NoteList extends Backbone.Collection
-#  localStorage: new Backbone.LocalStorage("notes")
-  url: "/notes"
+  url: -> 
+    "/notes/#{this.content_id}"
+  
   model: App.Models.Note
 
   addUnique: (note) ->

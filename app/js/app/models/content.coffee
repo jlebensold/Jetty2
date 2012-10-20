@@ -1,4 +1,12 @@
 class App.Models.Content extends Backbone.Model
+	idAttribute: "_id"
+
+	url: ->
+		if @.get('_id')
+			"/content/#{this.get('_id')}"
+		else
+			"/content"
+
 	initialize: ->
 
 	defaults: ->

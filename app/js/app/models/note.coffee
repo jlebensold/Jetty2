@@ -11,7 +11,6 @@ class App.Models.Note extends Backbone.Model
 
 	defaults: ->
 		{
-			content: ""
 			content_id: ""
 			content_version: 1
 			start_paragraph:0

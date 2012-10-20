@@ -33,8 +33,6 @@ module Bootstrap
     }
 
     get '/' do
-      @content = Content.find(:first)
-      @text = @content.text
       @templates = []
       template_path = "#{File.dirname(__FILE__)}/../public/javascripts/templates"
         Dir.foreach(template_path) do |f| 
@@ -46,10 +44,22 @@ module Bootstrap
       erb :index
     end
 
+# contents
+    get '/content/:id' do
+      content_type :json
+      Content.find(params[:id]).to_json()
+    end
+
+    get '/contents' do
+      content_type :json
+      Content.find(:all).only(:id, :title, :version, :created_at, :updated_at).to_json()
+    end
+
+
+# notes
     post '/notes' do
       content_type :json
-      n = Note.new(JSON.parse(request.body.read))
-      n.save()
+      n = Note.create(JSON.parse(request.body.read))
       n.to_json()
     end
 
@@ -65,12 +75,12 @@ module Bootstrap
       Note.find(params[:id]).destroy().to_json()
     end
 
-    get '/notes' do
+    get '/notes/:authority_id' do
       content_type :json
-      Note.find(:all).to_json()
+      Content.find(params[:authority_id]).notes.to_json()
     end
 
-#authorities
+# authorities
     post '/authorities' do
       content_type :json
       a = Authority.new(JSON.parse(request.body.read))
