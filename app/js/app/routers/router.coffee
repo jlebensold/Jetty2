@@ -4,6 +4,7 @@ class App.Router extends Backbone.Router
     "": "home",
     "home": "home",
     "content-:id": "content"
+    "content-:id/:anchor": "content"
 
   initialize: ->
     _.bindAll @, 'home', 'content'
@@ -16,7 +17,11 @@ class App.Router extends Backbone.Router
     @cv = new App.Views.ContentsView({collection: @contents, el:"#app" })
     @cv.render()
     
-  content: (id) -> 
+  content: (id,anchor) -> 
+    console.log "TODO: #{anchor}"
+    #if (anchor)
+    #  $('html,body').animate({scrollTop: $("#a_#{anchor}").offset().top},'slow');
+
     c  = new App.Models.Content({_id: id})
     new App.Views.ReaderView({collection: @al, el:"#app", model: c })
     c.fetch()

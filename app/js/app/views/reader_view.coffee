@@ -6,7 +6,6 @@ class App.Views.ReaderView extends Backbone.View
     _.bindAll @, 'render'
     @template = _.template($('#reader').html())
     
-    #FIXME refactor me away
     @collection.on('reset', @render)
     @model.on('change', @render)
 
@@ -14,7 +13,6 @@ class App.Views.ReaderView extends Backbone.View
   render: ->
     $(@el).html @template()
     if (@model.get('text').length == 0 || @collection.length == 0)
-      console.log 'loading...'
       return @
     @txtview = new App.Views.TextView({model: @model, authorities: @collection.first() })
     @am = new App.Views.AuthorityManagerView({collection: @collection})

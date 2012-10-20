@@ -5,10 +5,7 @@ class App.Views.ContentsView extends Backbone.View
   initialize: ->
     _.bindAll @, 'render'
     @template = _.template($('#contents').html())
-    
-    #FIXME refactor me away
     @collection.on('reset', @render)
-
     @
   render: ->
     $(@el).html @template()

@@ -79,7 +79,7 @@ class App.Views.TextView extends Backbone.View
 		i = 0
 		_.each @model.asParagraphs(), ((p) ->
 			o += "<div class=\"set\" data-set-id=\"#{i}\">
-					<p class=\"p_#{i}\">#{p}</p>
+					<p id=\"a_#{i}\" class=\"p_#{i}\">#{p}</p>
 				  </div>"
 
 			i = i + 1
