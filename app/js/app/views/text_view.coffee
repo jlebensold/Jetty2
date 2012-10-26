@@ -1,18 +1,44 @@
 class App.Views.TextView extends Backbone.View
 	events: ->
-		"mouseup p"							 : "getSelection"
+		"mouseup p"							 : "getSelection",
+		"click .next"						 : "nextPage",
+		"click .previous"				 : "previousPage"
+		"change .current_page"	 : "setPage"
 
 	initialize: ->
 		@template = _.template($('#content').html())
 		@authorities = @options.authorities
-		_.bindAll @, 'render', 'renderNote','renderNotes', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight'
+
+		current_page = 1
+		current_page ?= @options.current_page
+		@pagelist = App.Collections.PageList.paginate @model
+		@pagelist.current_page = current_page
+
+		_.bindAll @, 'render', 'renderNote','renderNotes', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight', 'nextPage','previousPage', 'setPage'
 
 		@notes = new App.Collections.NoteList()
 		@notes.content_id = @model.get('_id')
+		@pagelist.set_notes @notes
+
 		@notes.bind('reset',@.render)
 		@notes.bind('add',@.addHighlight)
 		@notes.bind('remove',@.renderNotes)
 		@notes.bind('change:collapsed',@.renderNotes)
+
+
+	setPage: (e) ->
+		@pagelist.current_page = $(@el).find('.current_page').val()
+		@.render()
+
+	nextPage: (e) ->
+		e.preventDefault()
+		@pagelist.current_page++
+		@.render()
+
+	previousPage: (e) ->
+		e.preventDefault()
+		@pagelist.current_page--
+		@.render()
 
 	getSelection: (e) ->
 		e.preventDefault()
@@ -21,9 +47,11 @@ class App.Views.TextView extends Backbone.View
 	renderNotes: ->
 		$(@el).find('.highlighting').remove()
 		$(@el).find('.note').remove()
-		@notes.each ((n) -> 
+		
+
+		@pagelist.notesAtCurrentPage().each ((n) => 
 			@.renderNote n
-		),@
+		)
 
 
 	addHighlight: (note) ->
@@ -74,14 +102,18 @@ class App.Views.TextView extends Backbone.View
 		h.html("#{first_normal_part}<em data-note-id=\"#{note.get('_id')}\" >#{highlighted_part}</em>#{second_normal_part}")
 
 	render: ->
-		$(@el).html @template(@model.toJSON())
+		$(@el).find(".notes_container").empty()
+		$(@el).html @template({
+			total_pages: @pagelist.totalPages(), 
+			current_page: @pagelist.current_page
+		})
 		o = ""
-		i = 0
-		_.each @model.asParagraphs(), ((p) ->
+		
+		i = @pagelist.pageSize * (@pagelist.current_page - 1 )
+		_.each @pagelist.currentPage().get('paragraphs'), ((p) ->
 			o += "<div class=\"set\" data-set-id=\"#{i}\">
 					<p id=\"a_#{i}\" class=\"p_#{i}\">#{p}</p>
 				  </div>"
-
 			i = i + 1
 		), this
 		$(@el).find(".content_container").html(o)
