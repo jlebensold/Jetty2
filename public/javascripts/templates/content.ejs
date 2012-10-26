@@ -1,8 +1,8 @@
-<div class="row-fluid">
-  <div class="span8 paginator" style="margin: 0 auto; width:200px;">
-    <a href="#" class="previous">previous</a>
-    <input type="text" class="current_page" style="width:30px;" value="<%= current_page%>" ></input> of <%= total_pages %>
-    <a href="#" class="next">next</a>
+<div class="row-fluid" style="text-align: center">
+  <div class="span8 paginator">
+    <a href="#" tabindex=1 class="previous">previous</a> | 
+    <input tabindex=2 type="text" class="current_page" style="width:30px;height: 20px;margin-top:10px;" value="<%= current_page%>" ></input> of <%= total_pages %> |
+    <a href="#" tabindex=3 class="next">next</a>
   </div>
 </div>
 <div class="row-fluid">
@@ -12,5 +12,12 @@
   </div>
   <div class="notes_container span1" >
 
+  </div>
+</div>
+<div class="row-fluid" style="text-align: center">
+  <div class="span8 paginator">
+    <a href="#" class="previous">previous</a> | 
+    <input type="text" class="current_page" style="width:30px;height: 20px;margin-top:10px;" value="<%= current_page%>" ></input> of <%= total_pages %> |
+    <a href="#" class="next">next</a>
   </div>
 </div>
