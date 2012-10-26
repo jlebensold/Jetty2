@@ -1,6 +1,8 @@
 describe 'App.Views.NoteView', ->
   beforeEach( ->
     @server = sinon.fakeServer.create()   
+#    @server.respondWith("GET","/contents",serverResponse(Fixtures.contents))
+#    @server.respond()
     reload_fx()
   )
   afterEach( ->

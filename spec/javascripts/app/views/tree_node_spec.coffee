@@ -10,6 +10,8 @@ describe 'App.Views.TreeNodeView', ->
 
 	it 'should render a tree', ->
     @server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+    @server.respondWith("GET","/contents",serverResponse(Fixtures.contents))
+
     auth = new App.Collections.AuthorityList()
     auth.fetch()
     @server.respond()

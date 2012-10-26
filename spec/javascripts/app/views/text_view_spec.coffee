@@ -1,6 +1,12 @@
 describe 'App.Views.TextView', ->
-	beforeEach ->
+	beforeEach( ->
+		@server = sinon.fakeServer.create()   
 		reload_fx()
+	)
+
+	afterEach( ->
+		@server.restore()
+	)
 
 	it 'should render render text', ->
 		txt = new App.Models.Content({text: Fixtures.text_text})
@@ -8,8 +14,13 @@ describe 'App.Views.TextView', ->
 		$("#testbed").html(view.render().el)
 
 	it 'should render highlight on top of text', ->
-		txt = new App.Models.Content({text: Fixtures.text_text})
-		view = new App.Views.TextView({model: txt})
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+		txt = new App.Models.Content({model: Fixtures.content})
+		txt.set('text',window.Fixtures.text_text)
+		view = new App.Views.TextView({model: txt, authorities: auth.first()})
 		$("#testbed").html(view.render().el)
 
 		note = new App.Models.Note({
@@ -31,8 +42,13 @@ describe 'App.Views.TextView', ->
 		expect($(".h_4 em").html()).toEqual('the launching of this')
 
 	it "should render notes near the highlighted text", ->
-		txt = new App.Models.Content({text: Fixtures.text_text})
-		view = new App.Views.TextView({model: txt})
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+		txt = new App.Models.Content({model: Fixtures.content})
+		txt.set('text',window.Fixtures.text_text)
+		view = new App.Views.TextView({model: txt, authorities: auth.first()})
 		$("#testbed").html(view.render().el)
 
 		note = new App.Models.Note({
@@ -47,9 +63,14 @@ describe 'App.Views.TextView', ->
 		expect($(view.el).find(".notes_container .note").length).toEqual(1)
 
 	it "should keep track of added notes", ->
-		txt = new App.Models.Content({text: Fixtures.text_text})
-		view = new App.Views.TextView({model: txt})
-		$("testbed").html(view.render().el)
+		@server.respondWith("GET","/authorities",serverResponse(Fixtures.locale_tree))
+		auth = new App.Collections.AuthorityList()
+		auth.fetch()
+		@server.respond()
+		txt = new App.Models.Content({model: Fixtures.content})
+		txt.set('text',window.Fixtures.text_text)
+		view = new App.Views.TextView({model: txt, authorities: auth.first()})
+		$("#testbed").html(view.render().el)
 
 		note = new App.Models.Note({
 			start_paragraph:5
