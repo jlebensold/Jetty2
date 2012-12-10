@@ -2,13 +2,6 @@ require 'rubygems'
 require 'net/pop'
 
 require 'bundler/setup'
-require 'sinatra'
-require 'coffee-script'
-require './bootstrap'
-
-
-set :environment, :development
-set :run, false
 
 require 'mongoid'
 require 'mongoid-ancestry'
