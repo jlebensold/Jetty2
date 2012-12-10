@@ -12,6 +12,7 @@ gem 'daemons'
 gem 'mongoid'
 gem 'mongoid-ancestry'
 gem 'bson_ext'
+gem 'daemons'
 group :development, :test do
   gem 'jasmine'
   gem 'thin'

@@ -1,6 +1,7 @@
 *.gem
 *.rbc
 *.swp
+jetty_bot*
 .bundle
 .config
 coverage
