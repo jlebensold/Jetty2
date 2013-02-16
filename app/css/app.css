@@ -5,6 +5,10 @@ body {
 	position: absolute;
 	z-index: 20;
 }
+
+.library { 
+}
+
 .authority_manager {
 	background: #FFF;
 	border-radius: 5px;

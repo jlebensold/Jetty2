@@ -14,8 +14,8 @@ class App.Router extends Backbone.Router
     @al.fetch()
 
   home: ->
-    @cv = new App.Views.ContentsView({collection: @contents, el:"#app" })
-    @cv.render()
+    @cv = new App.Views.LibraryCollectionView({collection: @contents})
+    $("#app").append(@cv.render().el);
     
   content: (id,anchor) -> 
     console.log "TODO: #{anchor}"
