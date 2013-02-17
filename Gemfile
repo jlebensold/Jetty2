@@ -13,6 +13,7 @@ gem 'mongoid'
 gem 'mongoid-ancestry'
 gem 'bson_ext'
 gem 'daemons'
+gem 'nokogiri'
 group :development, :test do
   gem 'jasmine'
   gem 'thin'
