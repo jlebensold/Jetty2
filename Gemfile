@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'rake'
 gem 'rack'
@@ -10,6 +10,7 @@ gem 'sass'
 gem 'uglifier'
 gem 'daemons'
 gem 'mongoid'
+gem 'bson_ext'
 gem 'mongoid-ancestry'
 gem 'bson_ext'
 gem 'daemons'
