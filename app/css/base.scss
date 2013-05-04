@@ -1,9 +1,47 @@
+html {
+  height:100%;
+}
+
 body {
+  height:100%;
   font-family:  'Open Sans', 'arial';
   font-size:    12px;
-  /* 60px to make the container go all the way to the bottom of the topbar */
-  padding-top: 60px;
+
+  .fill {
+    height:100%;
+  }
+
+  .container-fluid {
+    padding-left:0px;
+  }
+
   h1 {
     font-family: 'Tahoma';
   }
+
+  .sidebar {
+    color:#eee;
+    background-color:black;
+    margin-left:0px;
+    width:60px;
+    text-align:center;
+
+    div {
+      margin-top:5px;
+      margin-bottom:10px;
+      cursor:pointer;
+    }
+
+    .logo {
+      font-size:2em;
+      vertical-align:baseline;
+      line-height:normal;
+      font-weight:normal;
+      font-style:normal;
+      margin-bottom:15px;
+      -webkit-font-smoothing:antialiased;
+    }
+
+  }
+
 }

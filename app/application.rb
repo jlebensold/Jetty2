@@ -24,6 +24,7 @@ module Bootstrap
       css :application, '/css/main.css', [
         '/css/bootstrap/css/bootstrap.css',
         '/css/bootstrap/css/bootstrap-responsive.css',
+        '/css/fontawesome/fontawesome.css',
         '/css/*.css',
         '/css/*.scss'
       ]
