@@ -36,12 +36,10 @@ module Bootstrap
     get '/' do
       @templates = []
       template_path = "#{File.dirname(__FILE__)}/../public/javascripts/templates"
-        Dir.foreach(template_path) do |f| 
-          if f[0] != "."
-            @templates << {name:f.split('.').first,template:IO.readlines(File.join(template_path,f)).join()}
-          end
+      Dir.foreach(template_path) do |f| 
+        next if f[0] == "."
+        @templates << {name:f.split('.').first,template:IO.readlines(File.join(template_path,f)).join()}
       end
-
       erb :index
     end
 
@@ -118,7 +116,6 @@ module Bootstrap
       content_type :json
       Authority.where({ :name =>  Regexp.new(/.*#{params[:term]}.*/i)  }).map {|a| {label:a.name,id:a._id,value:a.name} }.to_json()
     end
-
 
   end
 end
