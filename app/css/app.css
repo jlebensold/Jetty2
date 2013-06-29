@@ -1,6 +1,13 @@
 body {
 	background: #AAA;
 }
+.sidebar {
+  position: fixed;
+  height: 100%;
+
+}
+
+
 .manager { 
 	position: absolute;
 	z-index: 20;
@@ -57,7 +64,6 @@ body {
 
 	}
 .content_container {
-	float: left;
 	font-size: 16px;
 	line-height: 1.5em;
 	margin: 1.5em;
