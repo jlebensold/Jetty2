@@ -66,8 +66,8 @@ body {
 .content_container {
 	font-size: 16px;
 	line-height: 1.5em;
-	margin: 1.5em;
 	background: #FFFEF0;
+	width: 100%;
 	color: #111;
 	font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, Utopia, serif;
 
@@ -94,7 +94,7 @@ body {
 			}
 		.content_container .set,
 		.content_container .set {
-			margin: 5.5em;
+			margin: 1.5em;
 		}
 
 .notes_container {
