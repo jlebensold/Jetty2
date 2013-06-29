@@ -70,8 +70,10 @@ body {
 	width: 100%;
 	color: #111;
 	font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, Utopia, serif;
-
 }
+  .content {
+    margin-left: 30px;
+  }
 	.content_container .set {
 		position: relative;
 	}
