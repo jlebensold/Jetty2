@@ -3,6 +3,7 @@ class App.Models.Page extends Backbone.Model
   
   defaults: -> 
   {
+    page: 1
     paragraphs: []
   }
   

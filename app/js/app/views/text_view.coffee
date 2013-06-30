@@ -9,18 +9,8 @@ class App.Views.TextView extends Backbone.View
     @template = _.template($('#content').html())
     @authorities = @options.authorities
 
-    @$el.swipe({
-      swipeRight: (e) =>
-        @pagelist.current_page++
-        @.render()
-      swipeLeft: (e) =>
-        @pagelist.current_page--
-        @.render()
-      })
-    current_page = 1
-    current_page ?= @options.current_page
-    @pagelist = App.Collections.PageList.paginate @model
-    @pagelist.current_page = current_page
+    @pagelist = new App.Collections.PageList()
+    @pagelist.magic(@model)
 
     _.bindAll @, 'render', 'renderNote','renderNotes', 'getSelection', 'addHighlight','addSingleParagraphHighlight','addMultiParagraphHighlight', 'nextPage','previousPage', 'setPage'
 
@@ -35,17 +25,17 @@ class App.Views.TextView extends Backbone.View
     
 
   setPage: (e) ->
-    @pagelist.current_page = $(@el).find('.current_page').val()
+    @model.save({current_page: $(@el).find('.current_page').val() })
     @.render()
 
   nextPage: (e) ->
     e.preventDefault()
-    @pagelist.current_page++
+    @pagelist.nextPage()
     @.render()
 
   previousPage: (e) ->
     e.preventDefault()
-    @pagelist.current_page--
+    @pagelist.previousPage()
     @.render()
 
   getSelection: (e) ->
@@ -116,7 +106,6 @@ class App.Views.TextView extends Backbone.View
       current_page: @pagelist.current_page
     })
     o = ""
-    
     i = @pagelist.pageSize * (@pagelist.current_page - 1 )
     _.each @pagelist.currentPage().get('paragraphs'), ((p) ->
       o += "<div class=\"set\" data-set-id=\"#{i}\">
@@ -126,4 +115,12 @@ class App.Views.TextView extends Backbone.View
     ), this
     $(@el).find(".content_container").html(o)
     @.renderNotes()
+    @$el.find('.swiper').swipe({
+      swipeRight: (e) =>
+        @pagelist.nextPage()
+        @.render()
+      swipeLeft: (e) =>
+        @pagelist.previousPage()
+        @.render()
+      })
     @

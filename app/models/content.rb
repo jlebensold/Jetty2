@@ -7,6 +7,7 @@ class Content
   field :version, type: Integer
   field :title, type: String
   field :text, type: String 
+  field :last_page, type: Integer
 
   has_many :notes
 end

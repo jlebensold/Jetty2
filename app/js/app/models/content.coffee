@@ -10,11 +10,10 @@ class App.Models.Content extends Backbone.Model
 	initialize: ->
 
 	defaults: ->
-		{
 			title: "untitled"
 			text: ""
 			version: 1
-		}
+			last_page: 1
 	# room for optimization here:
 	asParagraphs: ->
 		@.paragraphize @get('text')

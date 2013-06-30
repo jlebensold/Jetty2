@@ -49,6 +49,13 @@ module Bootstrap
       Content.find(params[:id]).to_json()
     end
 
+    put '/content/:id' do
+      content_type :json
+      c = Content.find(params[:id])
+      c.update_attributes(JSON.parse(request.body.read))
+      c.to_json()
+    end
+
     get '/contents' do
       content_type :json
       Content.find(:all).only(:id, :title, :version, :created_at, :updated_at).to_json()
