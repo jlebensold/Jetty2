@@ -30,7 +30,7 @@ class App.Views.ReaderView extends Backbone.View
     #@am = new App.Views.AuthorityManagerView({collection: @collection})
     @txtview.notes.fetch();
 
-    $(@el).find(".content").html(@txtview.render().el)
+    @$el.html(@txtview.render().el)
     #    $(@el).find(".manager").html(@am.render().el)
     @
 

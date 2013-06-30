@@ -11,37 +11,61 @@ body {
     height:100%;
   }
 
-  .container-fluid {
-    padding-left:0px;
-  }
 
   h1 {
     font-family: 'Tahoma';
   }
+  
+  .jetty-container {
+    margin: 0 0;
+    padding: 0;
+    height: 100%;
+    width:100%;
+    .jetty-row {
+      margin: 0 0;
+      padding: 0;
+      display: -webkit-box;
+      -webkit-flex-flow: column;
+      -webkit-box-align: stretch;
+      box-align: stretch;
+      height:100%;
+      width: 100%;
 
-  .sidebar {
-    color:#eee;
-    background-color:black;
-    margin-left:0px;
-    width:60px;
-    text-align:center;
+      .jetty-sidebar {
+        padding: 0;
+        display:block;
+        -webkit-flex: 1;
+        color:#eee;
+        height: 100%;
+        background-color:black;
+        box-orient:inline-axis;
+        text-align:center;
+        padding-top:20px;
+        div {
+          margin-top:5px;
+          margin-bottom:10px;
+          cursor:pointer;
+        }
 
-    div {
-      margin-top:5px;
-      margin-bottom:10px;
-      cursor:pointer;
+        .logo {
+          font-size:2em;
+          vertical-align:baseline;
+          line-height:normal;
+          font-weight:normal;
+          font-style:normal;
+          margin-bottom:15px;
+          -webkit-font-smoothing:antialiased;
+        }
+
+      }
+        
+      .jetty-body {
+        padding-top:20px;
+        -webkit-flex: 3;
+        display:block;
+        background: red;
+        overflow: scroll;
+      }
     }
-
-    .logo {
-      font-size:2em;
-      vertical-align:baseline;
-      line-height:normal;
-      font-weight:normal;
-      font-style:normal;
-      margin-bottom:15px;
-      -webkit-font-smoothing:antialiased;
-    }
-
   }
-
 }

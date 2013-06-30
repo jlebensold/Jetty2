@@ -25,24 +25,25 @@
 
   <!-- Mobile Specific Metas
   ================================================== -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <!-- CSS
   ================================================== -->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
   <%= css :application %>
 </head>
-<body style="margin: 0 0; padding: 0 0;">
-  <div class="container-fluid fill">
-    <div class="row fill">
-      <div class="span1 sidebar fill" style="">
+<body style="margin: 0 0;padding: 0 0;">
+  <div class="jetty-container" style="">
+    <div class="jetty-row" style="">
+      <div class="jetty-sidebar"  >
         <div class="logo"> Jetty </div>
         <div><i class="icon-list icon-2x"></i></div>
         <div><i class="icon-star icon-2x"></i> </div>
         <div><i class="icon-tag icon-2x"></i> </div>
         <div><i class="icon-sitemap icon-2x"></i> </div>
       </div>
-      <div id="app" class="span11 main">
+      <div id="app" class="jetty-body" >
       </div>
     </div>
   </div>
