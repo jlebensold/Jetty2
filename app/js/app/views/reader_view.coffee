@@ -4,10 +4,8 @@ class App.Views.ReaderView extends Backbone.View
   initialize: ->
     _.bindAll @, 'render','nextPage','previousPage', 'setPage'
     @template = _.template($('#reader').html())
-    
     @collection.on('reset', @render)
     @model.on('change', @render)
-
     @
 
   nextPage: (e)->
@@ -32,7 +30,7 @@ class App.Views.ReaderView extends Backbone.View
 
     @$el.html(@txtview.render().el)
     #    $(@el).find(".manager").html(@am.render().el)
-    @
 
+    @
 
 

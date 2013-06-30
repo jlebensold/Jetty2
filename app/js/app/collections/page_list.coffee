@@ -1,6 +1,6 @@
 class App.Collections.PageList extends Backbone.Collection
   model: App.Models.Page
-  @pageSize: 30
+  @pageSize: 10
 
   initialize: ->
     @.pageSize = App.Collections.PageList.pageSize

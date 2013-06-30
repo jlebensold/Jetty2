@@ -14,6 +14,16 @@ end
 
 task :ingest, [:file] do |t,args|
   txt = IO.readlines(File.expand_path(args[:file])).join("")
+  if false 
+    puts "BEFORE:"
+    puts txt[0..10000]
+    txt.gsub!("\n",'{token}') 
+    txt.gsub!('{token}{token}',"\n")
+    txt.gsub!('{token}',' ') 
+    puts "AFTER:"
+    puts txt[0..10000]
+    return
+  end
   c = Content.create(:title => File.basename(args[:file]), 
                      :version => 1, 
                      :text => txt)

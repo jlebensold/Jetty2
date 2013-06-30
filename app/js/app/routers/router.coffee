@@ -15,10 +15,9 @@ class App.Router extends Backbone.Router
 
   home: ->
     @cv = new App.Views.LibraryCollectionView({collection: @contents})
-    $("#app").append(@cv.render().el);
+    $("#app").html(@cv.render().el);
     
   content: (id,anchor) -> 
-    console.log "TODO: #{anchor}"
     #if (anchor)
     #  $('html,body').animate({scrollTop: $("#a_#{anchor}").offset().top},'slow');
 

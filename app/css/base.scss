@@ -32,40 +32,49 @@ body {
       width: 100%;
 
       .jetty-sidebar {
-        padding: 0;
         display:block;
         -webkit-flex: 1;
         color:#eee;
         height: 100%;
-        background-color:black;
         box-orient:inline-axis;
         text-align:center;
-        padding-top:20px;
-        div {
-          margin-top:5px;
+        margin: 0;
+        padding: 0;
+        width: 50px;
+        .container {
+          padding: 20px 0px 0 0px;
+          background: #000;
+
+          width: 50px;
+          position: fixed;
+          display: block;
+          height: 150%;
+          margin-top:0px;
           margin-bottom:10px;
           cursor:pointer;
-        }
+          .logo {
+            font-size:2em;
+            vertical-align:baseline;
+            line-height:normal;
+            font-weight:normal;
+            font-style:normal;
+            margin-bottom:15px;
+            -webkit-font-smoothing:antialiased;
+          }
 
-        .logo {
-          font-size:2em;
-          vertical-align:baseline;
-          line-height:normal;
-          font-weight:normal;
-          font-style:normal;
-          margin-bottom:15px;
-          -webkit-font-smoothing:antialiased;
         }
 
       }
         
       .jetty-body {
-        padding-top:20px;
+        padding-top:10px;
         -webkit-flex: 3;
         display:block;
-        background: red;
-        overflow: scroll;
+        margin-right:60px;
       }
     }
   }
+}
+.paginator {
+  text-align: center;
 }

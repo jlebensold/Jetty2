@@ -25,9 +25,9 @@
 
   <!-- Mobile Specific Metas
   ================================================== -->
-  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+  <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta foo="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <!-- CSS
   ================================================== -->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
@@ -37,11 +37,13 @@
   <div class="jetty-container" style="">
     <div class="jetty-row" style="">
       <div class="jetty-sidebar"  >
-        <div class="logo"> Jetty </div>
-        <div><i class="icon-list icon-2x"></i></div>
-        <div><i class="icon-star icon-2x"></i> </div>
-        <div><i class="icon-tag icon-2x"></i> </div>
-        <div><i class="icon-sitemap icon-2x"></i> </div>
+        <div class="container">
+          <div class="logo"> Jetty </div>
+          <div><a href="/#home"><i class="icon-list icon-2x"></i></a></div>
+          <div><i class="icon-star icon-2x"></i> </div>
+          <div><i class="icon-tag icon-2x"></i> </div>
+          <div><i class="icon-sitemap icon-2x"></i> </div>
+        </div>
       </div>
       <div id="app" class="jetty-body" >
       </div>
