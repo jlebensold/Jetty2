@@ -32,7 +32,10 @@ module Bootstrap
       js_compression  :uglify
       css_compression :sass
     }
-    
+    get '/inline' do
+      erb :inline, :layout => nil
+    end
+
     get '/' do
       @templates = []
       template_path = "#{File.dirname(__FILE__)}/../public/javascripts/templates"
