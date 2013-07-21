@@ -26,6 +26,7 @@ class App.Views.TextView extends Backbone.View
     @notes.bind('change:start_paragraph_char',@.render)
     @notes.bind('change:end_paragraph_char',@.render)
     
+      
 
   setPage: (e) ->
     @model.save({current_page: $(@el).find('.current_page').val() })
@@ -128,4 +129,10 @@ class App.Views.TextView extends Backbone.View
     ), this
     $(@el).find(".content_container").html(o)
     @.renderNotes()
+
+    $('body').swipe({
+      longTap: =>
+        alert('fff')
+        #@selectParagraph()
+    })
     @
