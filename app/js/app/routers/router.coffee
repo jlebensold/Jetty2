@@ -5,6 +5,7 @@ class Jetty.AppRouter extends Backbone.Router
     "home": "home",
     "content-:id": "content"
     "content-:id/:anchor": "content"
+    "authorities/": "authority"
 
   initialize: ->
     _.bindAll @, 'home', 'content'
@@ -16,6 +17,10 @@ class Jetty.AppRouter extends Backbone.Router
   home: ->
     @cv = new App.Views.LibraryCollectionView({collection: @contents})
     $("#app").html(@cv.render().el);
+    
+  authority: ->
+    @am = new App.Views.AuthorityManagerView({collection: @al})
+    $("#app").html(@am.render().el);
     
   content: (id,anchor) -> 
     #if (anchor)

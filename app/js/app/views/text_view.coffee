@@ -128,12 +128,4 @@ class App.Views.TextView extends Backbone.View
     ), this
     $(@el).find(".content_container").html(o)
     @.renderNotes()
-    @$el.find('.swiper').swipe({
-      swipeRight: (e) =>
-        @pagelist.nextPage()
-        @.render()
-      swipeLeft: (e) =>
-        @pagelist.previousPage()
-        @.render()
-      })
     @
