@@ -1,11 +1,10 @@
-window.App ?= {}
 class Jetty.AppRouter extends Backbone.Router
   routes:
     "": "home",
     "home": "home",
     "content-:id": "content"
     "content-:id/:anchor": "content"
-    "authorities/": "authority"
+    "authority": "authority"
 
   initialize: ->
     _.bindAll @, 'home', 'content'
