@@ -29,6 +29,7 @@ class App.Views.ReaderView extends Backbone.View
     @txtview.notes.fetch();
 
     @$el.html(@txtview.render().el)
+    $(document).scrollTop(0)
     #    $(@el).find(".manager").html(@am.render().el)
 
     @

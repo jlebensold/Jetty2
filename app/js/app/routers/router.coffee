@@ -1,5 +1,5 @@
 window.App ?= {}
-class App.Router extends Backbone.Router
+class Jetty.AppRouter extends Backbone.Router
   routes:
     "": "home",
     "home": "home",

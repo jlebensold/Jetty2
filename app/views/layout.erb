@@ -47,6 +47,14 @@
       </div>
       <div id="app" class="jetty-body" >
       </div>
+      <div id="slider" class="jetty-slider">
+        <div class="row">
+          <button class="pull-right btn btn-mini btn-warning">&times;</button>
+        </div>
+        <div class="container-fluid">
+          <div style="" id="slider-range"></div>
+        </div>
+      </div>
     </div>
   </div>
   <%= js :application %>
@@ -55,6 +63,7 @@
   <% end %>
   <script>
   var r, app,root;
+    $(function() { init(); });
   </script>
   
 

@@ -1,6 +1,7 @@
 class App.Views.TextView extends Backbone.View
   events: ->
-    "mouseup p"               : "getSelection",
+    #    "mouseup p"               : "getSelection",
+    "dblclick p"              : "selectParagraph"
     "click .next"             : "nextPage",
     "click .previous"         : "previousPage"
     "change .current_page"   : "setPage"
@@ -22,6 +23,8 @@ class App.Views.TextView extends Backbone.View
     @notes.bind('add',@.addHighlight)
     @notes.bind('remove',@.renderNotes)
     @notes.bind('change:collapsed',@.renderNotes)
+    @notes.bind('change:start_paragraph_char',@.render)
+    @notes.bind('change:end_paragraph_char',@.render)
     
 
   setPage: (e) ->
@@ -41,6 +44,16 @@ class App.Views.TextView extends Backbone.View
   getSelection: (e) ->
     e.preventDefault()
     @notes.fromContent(@model,window.getSelection())
+
+  selectParagraph: (e) -> 
+    e.preventDefault()
+    @note = @notes.tryGetNote(@model,window.getSelection())
+    console.log @note
+    if @note == null 
+      @note = @notes.roundParagraphFromContent(@model,window.getSelection())
+    @note.set('content',@model)
+    Jetty.App.vent.trigger('selection:showslider',@note,@)
+
 
   renderNotes: ->
     $(@el).find('.highlighting').remove()
